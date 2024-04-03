@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "968294497328",
+    "project_id": "tradingpro-de63f",
+    "storage_bucket": "tradingpro-de63f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:968294497328:android:98a1c5c1a0f477b756c1f5",
+        "android_client_info": {
+          "package_name": "com.example.trading_pro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsScwX2sCjNw6BunILfyL8imdL37QAEqg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/feed"
+        android:title="Лента"
+        android:icon="@drawable/baseline_feed_24"/>
+    <item
+        android:id="@+id/strategy"
+        android:title="Стратегии"
+        android:icon="@drawable/baseline_strategy_24"/>
+    <item
+        android:id="@+id/trading"
+        android:title="Торговля"
+        android:icon="@drawable/baseline_trading_24"/>
+    <item
+        android:id="@+id/profile"
+        android:title="Профиль"
+        android:icon="@drawable/baseline_profile_24"/>
+</menu>

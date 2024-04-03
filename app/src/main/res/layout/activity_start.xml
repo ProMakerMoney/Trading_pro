@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".StartActivity">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="a5.json"
+        app:lottie_loop="true"
+        android:scaleType="centerCrop"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#4D000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="170dp"
+        android:text="Pin Bot"
+        android:textSize="85dp"
+        android:fontFamily="@font/days_one_regular"
+        android:layout_centerHorizontal="true"
+        android:textColor="#FFFF"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="340dp"
+        android:layout_height="232dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="350dp"
+        android:layout_marginRight="18dp"
+        android:fontFamily="@font/days_one_regular"
+        android:text="Откройте мир безграничных возможностей!"
+        android:textColor="#FFFF"
+        android:textSize="40dp" />
+
+    <Button
+        android:id="@+id/button_start"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_marginTop="140dp"
+        android:background="@drawable/rounded_button"
+        android:fontFamily="@font/days_one_regular"
+        android:text="Начать"
+        android:layout_centerHorizontal="true"
+        android:textColor="#FFFF"
+        android:textSize="20sp" />
+
+</RelativeLayout>

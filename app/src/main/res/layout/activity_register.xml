@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:scrollbarThumbVertical="@null"
+    tools:context=".RegisterActivity"
+    android:background="@drawable/button_gradient">
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:orientation="vertical"
+            android:background="@drawable/input">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:text="Регистрация"
+                android:textSize="30sp"
+                android:fontFamily="@font/days_one_regular"/>
+
+
+
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:ems="10"
+                    android:hint="Имя"
+                    android:paddingLeft="16dp"
+                    android:background="@drawable/input"/>
+
+
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:ems="10"
+                    android:hint="Email"
+                    android:paddingLeft="16dp"
+                    android:background="@drawable/input"
+                    android:inputType="textEmailAddress" />
+
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:ems="10"
+                    android:hint="Пароль"
+                    android:paddingLeft="16dp"
+                    android:background="@drawable/input"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/register"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_margin="20dp"
+                android:text="@string/register"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:background="@drawable/rounded_button"
+                android:fontFamily="@font/days_one_regular"/>
+
+
+        </LinearLayout>
+
+</ScrollView>

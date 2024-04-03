@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".FeedFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation_view"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="train.json"
+            android:scaleY="2"
+            android:scaleX="2"
+            app:lottie_loop="true"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#33000000"/>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="130dp"
+        android:background="@drawable/button_gradient"
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:background="@drawable/input">
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_margin="15sp"
+                    android:background="@drawable/zm"/>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/userName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="25sp"
+                        android:textColor="#AE000000"
+                        android:fontFamily="@font/days_one_regular"/>
+
+                    <TextView
+                        android:id="@+id/userRole"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_gravity="center_horizontal"
+                        android:textSize="12sp"
+                        android:textColor="#AE000000"
+                        android:fontFamily="@font/days_one_regular"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="160dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center"
+                    app:cardCornerRadius="25dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/input">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Баланс"
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center"
+                        android:textSize="25sp"
+                        android:textColor="#AE000000"
+                        android:fontFamily="@font/days_one_regular"/>
+
+                    <TextView
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        android:background="@drawable/rounded_button"
+                        android:layout_margin="10dp"
+                        android:gravity="center"
+                        android:text="1000$"
+                        android:textColor="#FFF"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/days_one_regular"/>
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="160dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="@drawable/input">
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_margin="5dp"
+                            android:text="1"
+                            android:textColor="#fff"
+                            android:fontFamily="@font/days_one_regular"
+                            android:textSize="20sp"
+                            android:background="@drawable/rounded_button"/>
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_margin="5dp"
+                            android:text="2"
+                            android:textColor="#fff"
+                            android:fontFamily="@font/days_one_regular"
+                            android:textSize="20sp"
+                            android:background="@drawable/rounded_button"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_margin="5dp"
+                            android:text="3"
+                            android:textColor="#fff"
+                            android:fontFamily="@font/days_one_regular"
+                            android:textSize="20sp"
+                            android:background="@drawable/rounded_button"/>
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_margin="5dp"
+                            android:text="4"
+                            android:textColor="#fff"
+                            android:fontFamily="@font/days_one_regular"
+                            android:textSize="20sp"
+                            android:background="@drawable/rounded_button"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="30sp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/rounded_button">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Режим день!"
+                    android:textColor="#fff"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/days_one_regular"/>
+
+                <Switch
+                    android:id="@+id/switch1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="20dp"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
+    </RelativeLayout>
+
+
+</FrameLayout>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".LoginActivityPRO">
+
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="a5.json"
+        android:rotation="90"
+        android:scaleX="2.3"
+        android:scaleY="2.1"
+        app:lottie_loop="true"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#4D000000"/>
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:gravity="center_horizontal"
+            android:text="Добро пожаловать!"
+            android:textSize="50dp"
+            android:paddingLeft="10dp"
+            android:fontFamily="@font/days_one_regular"
+            android:layout_centerHorizontal="true"
+            android:textColor="#FFFF"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Вход"
+            android:layout_marginTop="60dp"
+            android:textSize="35dp"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/days_one_regular"
+            android:layout_centerHorizontal="true"
+            android:textColor="#FFFF"/>
+        
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="230dp"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="25dp"
+            android:orientation="vertical"
+            android:background="@drawable/input">
+
+
+            <EditText
+                android:id="@+id/email1"
+                android:layout_width="300dp"
+                android:layout_height="46dp"
+                android:layout_marginTop="50dp"
+                android:layout_gravity="center_horizontal"
+                android:ems="10"
+                android:hint="Email"
+                android:paddingLeft="16dp"
+                android:background="@drawable/input"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/textPassword"
+                android:layout_width="300dp"
+                android:layout_height="46dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/input"
+                android:ems="10"
+                android:hint="Пароль"
+                android:paddingLeft="16dp"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ещё нет аккаунта?"
+            android:layout_marginTop="5dp"
+            android:textColor="#9B9B9B"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/abel"
+            android:textSize="18dp"/>
+
+        <TextView
+            android:id="@+id/notRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Регистрация"
+            android:layout_marginTop="5dp"
+            android:textColor="#ECECEC"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/abel"
+            android:textSize="18dp"/>
+
+        <Button
+            android:id="@+id/button_start"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/days_one_regular"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="220dp"
+            android:text="Войти"
+            android:textColor="#FFFF"
+            android:textSize="20sp"
+            android:background="@drawable/input2"/>
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>
