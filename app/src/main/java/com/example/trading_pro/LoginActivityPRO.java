@@ -1,5 +1,7 @@
 package com.example.trading_pro;
 
+import static android.text.format.DateUtils.formatDateTime;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +12,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -43,15 +46,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivityPRO extends AppCompatActivity {
     private EditText emailEditText, passwordEditText;
     private FirebaseAuth mAuth;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,10 +99,7 @@ public class LoginActivityPRO extends AppCompatActivity {
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
 
-
-
-
-                if(isVpnEnabled()){
+                if (isVpnEnabled()) {
                     popupWindow.showAtLocation(
                             findViewById(android.R.id.content),
                             Gravity.CENTER,
@@ -97,7 +109,7 @@ public class LoginActivityPRO extends AppCompatActivity {
                     if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
                         mAuth.signInWithEmailAndPassword(email, password)
                                 .addOnCompleteListener(LoginActivityPRO.this, new OnCompleteListener<AuthResult>() {
-                                    @SuppressLint("ResourceAsColor")
+                                    @SuppressLint({"ResourceAsColor", "MissingPermission"})
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {
@@ -119,6 +131,50 @@ public class LoginActivityPRO extends AppCompatActivity {
                                                     0,
                                                     0
                                             );
+
+
+                                            // Получаем геолокацию пользователя
+                                            FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(LoginActivityPRO.this);
+                                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                                            assert currentUser != null;
+                                            String userId = currentUser.getUid();
+                                            fusedLocationClient.getLastLocation()
+                                                    .addOnSuccessListener(new OnSuccessListener<Location>() {
+                                                        @Override
+                                                        public void onSuccess(Location location) {
+                                                            // Если местоположение получено успешно
+                                                            if (location != null) {
+                                                                double latitude = location.getLatitude();
+                                                                double longitude = location.getLongitude();
+
+                                                                Map<String, Object> userData = new HashMap<>();
+
+                                                                // Создаем объект GeoPoint с полученными координатами
+                                                                userData.put("location", location); // Добавляем геометку в userData
+                                                                LocalDateTime currentDateTime = LocalDateTime.now();
+                                                                String formattedDateTime = formatDateTime(currentDateTime, "yyyy-MM-dd HH:mm:ss");
+                                                                userData.put("dataTime", formattedDateTime);
+
+                                                                db.collection("users").document(userId).collection("entrances").document(formattedDateTime)
+                                                                        .set(userData)
+                                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                            @Override
+                                                                            public void onSuccess(Void aVoid) {
+                                                                                // Данные пользователя успешно сохранены
+                                                                            }
+                                                                        })
+                                                                        .addOnFailureListener(new OnFailureListener() {
+                                                                            @Override
+                                                                            public void onFailure(@NonNull Exception e) {
+                                                                                // Обработка ошибки сохранения данных
+                                                                            }
+                                                                        });
+                                                            } else {
+                                                                // Местоположение не получено, необходимо обработать эту ситуацию
+                                                            }
+                                                        }
+                                                    });
 
                                             // Добавление паузы перед переходом
                                             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
@@ -182,6 +238,11 @@ public class LoginActivityPRO extends AppCompatActivity {
         Network activeNetwork = connectivityManager.getActiveNetwork();
         NetworkCapabilities networkCapabilities = connectivityManager.getNetworkCapabilities(activeNetwork);
         return networkCapabilities != null && networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN);
+    }
+
+    public static String formatDateTime(LocalDateTime dateTime, String pattern) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        return dateTime.format(formatter);
     }
 
 }

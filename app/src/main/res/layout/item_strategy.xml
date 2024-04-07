@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="20dp">
 
@@ -13,7 +13,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp"
@@ -30,29 +30,20 @@
 
             <TextView
                 android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Описание"
+                android:fontFamily="@font/days_one_regular"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+            <TextView
+                android:id="@+id/status_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Статус: вычисляется"
+                android:text="Статус"
                 android:fontFamily="@font/days_one_regular"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
         </LinearLayout>
-
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/loading_animation"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="true"
-                android:scaleY="1"
-                android:scaleX="1"
-                app:lottie_fileName="cat2.json" />
-
-        </RelativeLayout>
 
     </LinearLayout>
 

@@ -10,17 +10,33 @@
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center_horizontal">
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/loading_animation"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            android:scaleY="1"
-            android:scaleX="1"
-            app:lottie_fileName="coming.json" />
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            android:background="@drawable/rounded_button"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="BTC/USDT"
+                android:textSize="35dp"
+                android:textColor="#fff"
+                android:fontFamily="@font/days_one_regular"
+                android:layout_marginTop="15dp"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="30dp"
+                android:textColor="#fff"
+                android:fontFamily="@font/days_one_regular"
+                android:gravity="center"/>
+        </LinearLayout>
 
     </FrameLayout>
 

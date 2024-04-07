@@ -83,25 +83,27 @@ public class StrategyFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     public void db (View view){
-        db.collection("Users")
+        db.collection("strategies")
+                .document("Strategy_one")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
-                            List<StrategyDocument> userData = new ArrayList<>();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                userData.add(document.toObject(StrategyDocument.class));
-                            }
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
 
-                            RecyclerView recyclerView = view.findViewById(R.id.strategy_info);
-                            StrategyDocumentAdapter adapter = new StrategyDocumentAdapter(userData);
-                            recyclerView.setAdapter(adapter);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                // Создаем список и добавляем strategyData в него
+                                List<StrategyDocument> strategyDataList = new ArrayList<>();
+                                strategyDataList.add(document.toObject(StrategyDocument.class));
 
-                            // Добавляем обработчик нажатий на элементы списка
-                            adapter.setOnItemClickListener(new StrategyDocumentAdapter.OnItemClickListener() {
+
+                                RecyclerView recyclerView = view.findViewById(R.id.strategy_info);
+                                StrategyDocumentAdapter adapter = new StrategyDocumentAdapter(strategyDataList);
+                                recyclerView.setAdapter(adapter);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                                adapter.setOnItemClickListener(new StrategyDocumentAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(StrategyDocument document) {
                                     // Здесь вы можете реализовать переход на новое окно, связанное с выбранным документом
@@ -113,8 +115,13 @@ public class StrategyFragment extends Fragment implements SwipeRefreshLayout.OnR
                                     startActivity(intent);
                                 }
                             });
+
+
+                            } else {
+                                Log.d(TAG, "No such document");
+                            }
                         } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
+                            Log.d(TAG, "Get failed with ", task.getException());
                         }
                     }
                 });

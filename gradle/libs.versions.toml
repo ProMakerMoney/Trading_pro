@@ -2,10 +2,13 @@
 agp = "8.3.1"
 bottomNavigationBar = "2.0.5"
 bubblenavigation = "1.0.7"
+bybitApiClient = "1.0.0"
+bybitJavaApi = "1.2.4"
 cardview = "1.0.0"
 firebaseAuth = "22.3.1"
 firebaseBom = "32.7.4"
 firebaseFirestore = "24.11.0"
+json = "20090211"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
@@ -24,10 +27,13 @@ swiperefreshlayout = "1.1.0"
 [libraries]
 bottom-navigation-bar = { module = "com.ashokvarma.android:bottom-navigation-bar", version.ref = "bottomNavigationBar" }
 bubblenavigation = { module = "com.gauravk.bubblenavigation:bubblenavigation", version.ref = "bubblenavigation" }
+bybit-api-client = { module = "com.bybit:bybit-api-client", version.ref = "bybitApiClient" }
+bybit-java-api = { module = "io.github.wuhewuhe:bybit-java-api", version.ref = "bybitJavaApi" }
 cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
 firebase-auth = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestore" }
+json = { module = "org.json:json", version.ref = "json" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
