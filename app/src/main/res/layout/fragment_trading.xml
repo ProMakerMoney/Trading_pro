@@ -131,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
                 android:textColor="#fff"
-                android:text="Дрыхнеть"
+                android:text="Дрыхнет"
                 android:fontFamily="@font/days_one_regular"
                 android:gravity="center"
                 android:background="@drawable/rounded_button"/>
