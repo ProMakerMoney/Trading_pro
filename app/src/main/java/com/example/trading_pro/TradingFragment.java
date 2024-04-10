@@ -58,7 +58,7 @@ public class TradingFragment extends Fragment {
 
     private void fetchPrice() {
         var client = BybitApiClientFactory.newInstance().newAsyncMarketDataRestClient();
-        var tickerRequest = MarketDataRequest.builder().category(CategoryType.LINEAR).symbol("BTCUSDT").build();
+        var tickerRequest = MarketDataRequest.builder().category(CategoryType.LINEAR).symbol("SOLUSDT").build();
         client.getMarketTickers(tickerRequest, System.out::println);
         client.getMarketTickers(tickerRequest, response -> {
             System.out.println(response);

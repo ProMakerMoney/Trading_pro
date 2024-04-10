@@ -7,22 +7,62 @@
     android:background="@drawable/button_gradient"
     tools:context=".StrategyFragment">
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal">
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/loading_animation"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
+            android:id="@+id/animation_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            android:scaleY="1"
-            android:scaleX="1"
-            app:lottie_fileName="coming.json" />
+            app:lottie_fileName="star.json"
+            android:scaleX="2"
+            android:scaleY="2"
+            app:lottie_loop="true"/>
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#4D000000"/>
 
-    </FrameLayout>
+        <TextView
+            android:id="@+id/full_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Лента"
+            android:layout_marginTop="45dp"
+            android:textSize="35sp"
+            android:textColor="#CCFFFFFF"
+            android:fontFamily="@font/days_one_regular"
+            android:layout_centerHorizontal="true"
+            android:includeFontPadding="false"
+            android:layout_marginLeft="10dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="130dp"
+        android:background="@drawable/button_gradient"
+        android:gravity="center_horizontal">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/strategy_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:padding="6dp"
+                android:scrollbars="vertical"
+                tools:listitem="@layout/item_feed"/>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </RelativeLayout>
 
 
 </FrameLayout>

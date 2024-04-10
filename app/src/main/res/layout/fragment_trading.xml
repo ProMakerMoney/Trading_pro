@@ -7,38 +7,169 @@
     android:background="@drawable/button_gradient"
     tools:context=".TradingFragment">
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center_horizontal">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="300dp"
-            android:layout_height="150dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/rounded_button"
-            android:orientation="vertical">
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="BTC/USDT"
-                android:textSize="35dp"
+                android:text="SOL/USDT"
+                android:textSize="25dp"
                 android:textColor="#fff"
+                android:padding="10dp"
                 android:fontFamily="@font/days_one_regular"
-                android:layout_marginTop="15dp"
                 android:gravity="center"/>
             <TextView
                 android:id="@+id/price"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:textColor="#fff"
                 android:fontFamily="@font/days_one_regular"
                 android:gravity="center"/>
         </LinearLayout>
 
-    </FrameLayout>
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_button"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Статус сервера №1:"
+                    android:textSize="20dp"
+                    android:textColor="#fff"
+                    android:padding="10dp"
+                    android:fontFamily="@font/days_one_regular"
+                    android:gravity="center"/>
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/animation_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:lottie_autoPlay="true"
+                    app:lottie_fileName="serv_on.json"
+                    app:lottie_loop="true"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"/>
+
+            </LinearLayout>
+
+
+
+            <TextView
+                android:id="@+id/server_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="#fff"
+                android:text="Пашет аки конь"
+                android:fontFamily="@font/days_one_regular"
+                android:gravity="center"
+                android:background="@drawable/rounded_button"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_button"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Статус сервера №2:"
+                    android:textSize="20dp"
+                    android:textColor="#fff"
+                    android:padding="10dp"
+                    android:fontFamily="@font/days_one_regular"
+                    android:gravity="center"/>
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/animation_view_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:lottie_autoPlay="true"
+                    app:lottie_fileName="serv_on.json"
+                    app:lottie_loop="true"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"/>
+
+            </LinearLayout>
+
+
+
+            <TextView
+                android:id="@+id/server_status_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="#fff"
+                android:text="Пашет аки конь"
+                android:fontFamily="@font/days_one_regular"
+                android:gravity="center"
+                android:background="@drawable/rounded_button"/>
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="15dp"
+            android:layout_margin="20dp"
+            android:background="@drawable/rounded_button"
+            android:gravity="center_horizontal">
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefreshLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/strategy_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:padding="6dp"
+                    android:scrollbars="vertical"
+                    tools:listitem="@layout/item_strategy"/>
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+
+
+
 
 
 </FrameLayout>
