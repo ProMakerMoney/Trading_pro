@@ -116,7 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:lottie_autoPlay="true"
-                    app:lottie_fileName="serv_on.json"
+                    app:lottie_fileName="lost.json"
                     app:lottie_loop="true"
                     android:layout_gravity="center"
                     android:scaleType="centerCrop"/>
@@ -131,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
                 android:textColor="#fff"
-                android:text="Пашет аки конь"
+                android:text="Дрыхнеть"
                 android:fontFamily="@font/days_one_regular"
                 android:gravity="center"
                 android:background="@drawable/rounded_button"/>
