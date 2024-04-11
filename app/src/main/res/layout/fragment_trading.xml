@@ -63,14 +63,13 @@
                     android:gravity="center"/>
 
                 <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/animation_view"
+                    android:id="@+id/animation_status_1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:lottie_autoPlay="true"
-                    app:lottie_fileName="serv_on.json"
+                    app:lottie_fileName="work_on.json"
                     app:lottie_loop="true"
-                    android:layout_gravity="center"
-                    android:scaleType="centerCrop"/>
+                    android:layout_gravity="center" />
 
             </LinearLayout>
 
@@ -116,10 +115,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:lottie_autoPlay="true"
-                    app:lottie_fileName="lost.json"
+                    app:lottie_fileName="server_off.json"
                     app:lottie_loop="true"
-                    android:layout_gravity="center"
-                    android:scaleType="centerCrop"/>
+                    android:layout_gravity="center" />
 
             </LinearLayout>
 
