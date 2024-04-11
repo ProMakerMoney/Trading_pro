@@ -1,20 +1,23 @@
 package com.example.trading_pro;
 
+
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.airbnb.lottie.LottieAnimationView;
+
 import com.bybit.api.client.domain.CategoryType;
-import com.bybit.api.client.domain.market.*;
 import com.bybit.api.client.domain.market.request.MarketDataRequest;
 import com.bybit.api.client.service.BybitApiClientFactory;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,19 +25,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -45,11 +41,11 @@ public class TradingFragment extends Fragment {
     private TextView textView;
     private TextView statusServerOne;
     private ScheduledExecutorService executorService;
+    private LinearLayout layoutServerOne;
 
-    private LottieAnimationView lottieAnimationView;
 
     private double lastPrice = 0.0;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public TradingFragment() {
         // Required empty public constructor
@@ -62,12 +58,13 @@ public class TradingFragment extends Fragment {
 
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_trading, container, false);
         textView = rootView.findViewById(R.id.price);
         statusServerOne = rootView.findViewById(R.id.server_status);
-        lottieAnimationView = rootView.findViewById(R.id.animation_status_1);
+        layoutServerOne = rootView.findViewById(R.id.l_server_1);
 
         executorService = Executors.newSingleThreadScheduledExecutor();
         executorService.scheduleAtFixedRate(this::fetchPrice, 0, 2, TimeUnit.SECONDS);
@@ -76,7 +73,7 @@ public class TradingFragment extends Fragment {
         return rootView;
     }
 
-    private void serverStatus(){
+    private void serverStatus() {
         CollectionReference statusCollection = db.collection("servers")
                 .document("server_one")
                 .collection("status");
@@ -106,14 +103,12 @@ public class TradingFragment extends Fragment {
                                 // Проверяем, если разница больше 2 минут
                                 if (duration.toMinutes() > 1) {
                                     // Выводим разницу
-                                    statusServerOne.setText("Сервер отдыхает: " + duration.toMinutes() + " м.");
-                                    lottieAnimationView.setAnimation("server_off.json");
-                                    lottieAnimationView.playAnimation();
-                                }
-                                else {
-                                    statusServerOne.setText("Сервер пашет");
-                                    lottieAnimationView.setAnimation("work_on.json");
-                                    lottieAnimationView.playAnimation();
+                                    statusServerOne.setText("Отключен " + duration.toMinutes() + " м.");
+                                    layoutServerOne.setBackground(getResources().getDrawable(R.drawable.rounded_red));
+
+                                } else {
+                                    statusServerOne.setText("Работает");
+                                    layoutServerOne.setBackground(getResources().getDrawable(R.drawable.rounded_green));
                                 }
                             } else {
                                 // Коллекция пустая
@@ -152,7 +147,7 @@ public class TradingFragment extends Fragment {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
 
-        if(matcher.find()) {
+        if (matcher.find()) {
             return matcher.group(1); // Возвращаем первую найденную группу, где находится значение
         } else {
             return "Not Found";
@@ -180,4 +175,5 @@ public class TradingFragment extends Fragment {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return LocalDateTime.parse(dateTimeString, formatter);
     }
+
 }
