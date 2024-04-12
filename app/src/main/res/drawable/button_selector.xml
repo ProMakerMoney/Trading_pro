@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="#99009688" /> <!-- Цвет для нажатого состояния -->
+            <stroke android:width="5dp" android:color="#3C000000" />
+            <corners android:radius="10dp" /><!-- Цвет границы для нажатого состояния -->
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <solid android:color="#99009688" /> <!-- Цвет для обычного состояния -->
+            <stroke android:width="3dp" android:color="#00000000" />
+            <corners android:radius="10dp" /><!-- Цвет границы для обычного состояния -->
+        </shape>
+    </item>
+</selector>
