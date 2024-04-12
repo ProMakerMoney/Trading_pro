@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
@@ -17,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,14 +27,19 @@ import android.widget.TextView;
 import com.bybit.api.client.domain.CategoryType;
 import com.bybit.api.client.domain.market.request.MarketDataRequest;
 import com.bybit.api.client.service.BybitApiClientFactory;
+import com.example.trading_pro.order.OrderPro;
+import com.example.trading_pro.order.PrimeOrder;
 import com.example.trading_pro.order.STATUS;
 import com.example.trading_pro.order.TYPE;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 
@@ -40,6 +47,9 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -48,12 +58,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TradingFragment extends Fragment {
+
+    private double DEPOSIT = 100;
+    private Integer RISK = 10;
+    private Integer LEVERAGE = 5;
     private TextView textView;
     private TextView statusServerOne;
     private TextView price2;
     private TextView orderNum;
     private ScheduledExecutorService executorService;
     private LinearLayout layoutServerOne;
+
+    private TextView marqueeTextView;
+    private TextView settings;
 
     private Dialog dialog;
 
@@ -86,10 +103,19 @@ public class TradingFragment extends Fragment {
         statusServerOne = rootView.findViewById(R.id.server_status);
         layoutServerOne = rootView.findViewById(R.id.l_server_1);
 
+        marqueeTextView = rootView.findViewById(R.id.marqueeTextView);
+        marqueeTextView.setSelected(true);// Начинает анимацию бегущей полосы
+
+        settings = rootView.findViewById(R.id.settings);
+        settings.setText(DEPOSIT + " || " + RISK + " || " + LEVERAGE);
+
         executorService = Executors.newSingleThreadScheduledExecutor();
         executorService.scheduleAtFixedRate(this::fetchPrice, 0, 2, TimeUnit.SECONDS);
         executorService.scheduleAtFixedRate(this::serverStatus, 0, 7, TimeUnit.SECONDS);
         executorService.scheduleAtFixedRate(this::orderStatus, 0, 5, TimeUnit.SECONDS);
+
+
+
 
         lolButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,6 +156,8 @@ public class TradingFragment extends Fragment {
                                 String priceString = Double.toString(pri);
                                 price2.setText(priceString);
                                 orderNum.setText(lastOrderLog.getId().toString() + "/25");
+
+                                marqueeTextView.setText(lastOrderLog.getId().toString() + "/25  ||  " + type.toString() + "  ||  " + priceString);
                             }
                         } else {
                             // Обработка ошибки
@@ -250,11 +278,83 @@ public class TradingFragment extends Fragment {
         dialog.show();
 
         AppCompatButton okButton = dialogView.findViewById(R.id.okButton);
+        EditText deposit = dialogView.findViewById(R.id.deposit);
+        EditText risk = dialogView.findViewById(R.id.risk);
+        EditText leverage = dialogView.findViewById(R.id.leverage);
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String depositText = deposit.getText().toString();
+                String riskText = risk.getText().toString();
+                String leverageText = leverage.getText().toString();
+
+                // Проверка, что поля не пустые
+                if (!depositText.isEmpty() && !riskText.isEmpty() && !leverageText.isEmpty()) {
+                    try {
+                        DEPOSIT = Double.parseDouble(depositText);
+                        RISK = Integer.parseInt(riskText);
+                        LEVERAGE = Integer.parseInt(leverageText);
+                        // Дальнейшие действия с данными
+                        settings.setText(DEPOSIT + "  ||  " + RISK + "  ||  " + LEVERAGE);
+                    } catch (NumberFormatException e) {
+                        // Обработка ошибки, если введенные значения некорректны
+                        e.printStackTrace();
+                    }
+                } else {
+                    // Обработка ошибки, если одно или несколько полей пустые
+                }
+
                 dialog.dismiss();
             }
         });
+    }
+
+    public List<PrimeOrder> getPrimeOrders(){
+        CollectionReference primeOrdersRef = db.collection("servers")
+                .document("server_one")
+                .collection("primeOrders");
+
+        List<PrimeOrder> primeOrderList = new ArrayList<>();
+
+        primeOrdersRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    // Обработка ошибки
+                    return;
+                }
+
+                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                    // Извлечение данных PrimeOrder
+                    int id = documentSnapshot.getLong("ID").intValue();
+                    String typeString = documentSnapshot.getString("Type");
+                    TYPE type = TYPE.valueOf(typeString);
+
+                    // Извлечение данных Orders
+                    Map<String, Object> ordersMap = (Map<String, Object>) documentSnapshot.get("Orders");
+                    List<OrderPro> orders = new ArrayList<>();
+                    for (Map.Entry<String, Object> entry : ordersMap.entrySet()) {
+                        Map<String, Object> orderMap = (Map<String, Object>) entry.getValue();
+                        OrderPro order = new OrderPro(
+                                Integer.parseInt(orderMap.get("id").toString()),
+                                Double.parseDouble(orderMap.get("enterPrice").toString()),
+                                Double.parseDouble(orderMap.get("exitPrice").toString()),
+                                LocalDateTime.parse(orderMap.get("enterTime").toString()),
+                                LocalDateTime.parse(orderMap.get("exitTime").toString()),
+                                TYPE.valueOf(orderMap.get("type").toString())
+                        );
+                        orders.add(order);
+                    }
+
+                    // Создание объекта PrimeOrder и добавление в список
+                    PrimeOrder primeOrder = new PrimeOrder(id, orders, type);
+                    primeOrderList.add(primeOrder);
+                }
+
+                // Дальнейшая обработка списка primeOrderList
+            }
+        });
+
+        return primeOrderList;
     }
 }
