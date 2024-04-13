@@ -54,4 +54,12 @@ public class OrderPro {
         }
         return profit;
     }
+
+    public Double getEnterPrice() {
+        return enterPrice;
+    }
+
+    public Double getExitPrice() {
+        return exitPrice;
+    }
 }

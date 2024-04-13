@@ -33,10 +33,11 @@ public class PrimeOrderDocumentAdapter extends RecyclerView.Adapter<PrimeOrderDo
         PrimeOrderDocument document = documents.get(position);
         holder.id.setText(document.getId().toString());
         holder.type.setText(document.getType().toString());
-        holder.margin.setText(document.getMargin().toString());
-        holder.perProfitOrder.setText(document.getPerProfitOrder().toString());
-        holder.profit.setText(document.getProfit().toString());
-        holder.perProfitDeposit.setText(document.getPerProfitDeposit().toString());
+        holder.margin.setText(String.format("%.2f", document.getMargin()) + "$");
+        holder.perProfitOrder.setText(String.format("%.2f", document.getPerProfitOrder()) + "%");
+        holder.profit.setText(String.format("%.2f", document.getProfit()) + "$");
+        holder.perProfitDeposit.setText(String.format("%.2f", document.getPerProfitDeposit()) + "%");
+
     }
 
     @Override

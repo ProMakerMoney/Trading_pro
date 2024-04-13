@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.view.LayoutInflater;
@@ -28,7 +30,10 @@ import com.bybit.api.client.domain.CategoryType;
 import com.bybit.api.client.domain.market.request.MarketDataRequest;
 import com.bybit.api.client.service.BybitApiClientFactory;
 import com.example.trading_pro.order.OrderPro;
+import com.example.trading_pro.order.OrdersManager;
 import com.example.trading_pro.order.PrimeOrder;
+import com.example.trading_pro.order.PrimeOrderDocument;
+import com.example.trading_pro.order.PrimeOrderDocumentAdapter;
 import com.example.trading_pro.order.STATUS;
 import com.example.trading_pro.order.TYPE;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -62,6 +67,9 @@ public class TradingFragment extends Fragment {
     private double DEPOSIT = 100;
     private Integer RISK = 10;
     private Integer LEVERAGE = 5;
+
+    private Double FINAL_DEPOSIT = DEPOSIT;
+    private Double TOTAL_PROFIT = (double) 0;
     private TextView textView;
     private TextView statusServerOne;
     private TextView price2;
@@ -75,6 +83,11 @@ public class TradingFragment extends Fragment {
     private Dialog dialog;
 
     private ImageButton lolButton;
+
+    RecyclerView recyclerView;
+
+    TextView finalDeposit;
+    TextView totalProfit;
 
 
     private double lastPrice = 0.0;
@@ -103,6 +116,9 @@ public class TradingFragment extends Fragment {
         statusServerOne = rootView.findViewById(R.id.server_status);
         layoutServerOne = rootView.findViewById(R.id.l_server_1);
 
+        finalDeposit = rootView.findViewById(R.id.final_deposit);
+        totalProfit = rootView.findViewById(R.id.totalProfit);
+
         marqueeTextView = rootView.findViewById(R.id.marqueeTextView);
         marqueeTextView.setSelected(true);// Начинает анимацию бегущей полосы
 
@@ -114,6 +130,10 @@ public class TradingFragment extends Fragment {
         executorService.scheduleAtFixedRate(this::serverStatus, 0, 7, TimeUnit.SECONDS);
         executorService.scheduleAtFixedRate(this::orderStatus, 0, 5, TimeUnit.SECONDS);
 
+        recyclerView = rootView.findViewById(R.id.trading_info);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        executorService.scheduleAtFixedRate(this::ordersList, 0, 1, TimeUnit.MINUTES);
 
 
 
@@ -125,6 +145,10 @@ public class TradingFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    private void ordersList(){
+        getPrimeOrders(recyclerView);
     }
 
     private void orderStatus(){
@@ -296,6 +320,9 @@ public class TradingFragment extends Fragment {
                         LEVERAGE = Integer.parseInt(leverageText);
                         // Дальнейшие действия с данными
                         settings.setText(DEPOSIT + "  ||  " + RISK + "  ||  " + LEVERAGE);
+
+                        getPrimeOrders(recyclerView); ///!!!
+
                     } catch (NumberFormatException e) {
                         // Обработка ошибки, если введенные значения некорректны
                         e.printStackTrace();
@@ -309,7 +336,7 @@ public class TradingFragment extends Fragment {
         });
     }
 
-    public List<PrimeOrder> getPrimeOrders(){
+    public List<PrimeOrder> getPrimeOrders(View view){
         CollectionReference primeOrdersRef = db.collection("servers")
                 .document("server_one")
                 .collection("primeOrders");
@@ -352,6 +379,16 @@ public class TradingFragment extends Fragment {
                 }
 
                 // Дальнейшая обработка списка primeOrderList
+                OrdersManager ordersManager = new OrdersManager(primeOrderList, DEPOSIT, RISK, LEVERAGE);
+                ordersManager.getPrimeOrderDocument();
+                TOTAL_PROFIT = ordersManager.getTotalProfit();
+                FINAL_DEPOSIT = ordersManager.getDEPOSIT();
+                totalProfit.setText(String.format("%.2f",TOTAL_PROFIT));
+                finalDeposit.setText(String.format("%.2f",FINAL_DEPOSIT));
+
+                List<PrimeOrderDocument> primeOrderDocumentList = ordersManager.getPrimeOrderDocument();
+                PrimeOrderDocumentAdapter adapter = new PrimeOrderDocumentAdapter(primeOrderDocumentList);
+                recyclerView.setAdapter(adapter);
             }
         });
 

@@ -224,21 +224,110 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/item_strategy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/input">
+
+            <TextView
+                android:id="@+id/order_id"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:text="№"
+                android:textSize="10sp"
+                android:gravity="center"
+                android:fontFamily="@font/days_one_regular"
+                android:textColor="#fff"
+                android:background="@drawable/rounded_button"
+                android:padding="5dp"
+                android:layout_margin="2dp"/>
+
+            <TextView
+                android:id="@+id/order_type"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="L/S"
+                android:textSize="10sp"
+                android:gravity="center"
+                android:fontFamily="@font/days_one_regular"
+                android:textColor="#fff"
+                android:background="@drawable/rounded_button"
+                android:padding="8dp"
+                android:layout_margin="2dp"/>
+
+            <TextView
+                android:id="@+id/order_margin"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="Маржа"
+                android:textSize="10sp"
+                android:gravity="center"
+                android:fontFamily="@font/days_one_regular"
+                android:textColor="#fff"
+                android:background="@drawable/rounded_button"
+                android:padding="8dp"
+                android:layout_margin="2dp"/>
+
+            <TextView
+                android:id="@+id/order_profit_per"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:text="% мар"
+                android:textSize="10sp"
+                android:gravity="center"
+                android:fontFamily="@font/days_one_regular"
+                android:textColor="#fff"
+                android:background="@drawable/rounded_button"
+                android:padding="8dp"/>
+
+            <TextView
+                android:id="@+id/order_profit"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="Профит"
+                android:textSize="10sp"
+                android:gravity="center"
+                android:fontFamily="@font/days_one_regular"
+                android:textColor="#fff"
+                android:background="@drawable/rounded_button"
+                android:padding="8dp"
+                android:layout_margin="2dp"/>
+
+            <TextView
+                android:id="@+id/order_per"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="% деп"
+                android:textSize="10sp"
+                android:gravity="center"
+                android:fontFamily="@font/days_one_regular"
+                android:textColor="#fff"
+                android:background="@drawable/rounded_button"
+                android:padding="8dp"
+                android:layout_margin="2dp"/>
+
+        </LinearLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_margin="20dp"
-            android:layout_marginTop="15dp"
+            android:layout_height="250dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/rounded_button"
             android:gravity="center_horizontal">
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            <RelativeLayout
                 android:id="@+id/swipeRefreshLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/strategy_info"
+                    android:id="@+id/trading_info"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
@@ -246,7 +335,7 @@
                     android:scrollbars="vertical"
                     tools:listitem="@layout/item_order" />
 
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            </RelativeLayout>
         </RelativeLayout>
 
 
@@ -285,6 +374,7 @@
                 android:textSize="15dp" />
 
             <TextView
+                android:id="@+id/final_deposit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/days_one_regular"
@@ -315,6 +405,7 @@
                 android:textSize="15dp" />
 
             <TextView
+                android:id="@+id/totalProfit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/days_one_regular"

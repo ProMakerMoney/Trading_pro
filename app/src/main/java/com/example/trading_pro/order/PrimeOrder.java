@@ -18,7 +18,7 @@ public class PrimeOrder {
     }
 
     public Double getTolalProfit(double margin, int leverage, double commission){
-        Double totalProfit = null;
+        Double totalProfit = (double) 0;
 
         for(OrderPro orderPro : orders){
             totalProfit = totalProfit + orderPro.calcProfit(margin, leverage, commission);
@@ -27,15 +27,6 @@ public class PrimeOrder {
         return totalProfit;
     }
 
-    public Double getTotalMargin(double margin){
-        Double totalMargin = null;
-
-        for(int i = 0; i < orders.size(); i++){
-            totalMargin = totalMargin + margin;
-        }
-
-        return totalMargin;
-    }
 
     public Integer getId() {
         return id;
@@ -43,5 +34,26 @@ public class PrimeOrder {
 
     public TYPE getType() {
         return type;
+    }
+
+    public Double getPerProfitOrder() {
+
+        Double enterPriceSum = (double) 0;
+        for(OrderPro orderPro : orders){
+            enterPriceSum = enterPriceSum + orderPro.getEnterPrice();
+        }
+        Double enterPriceAVG = enterPriceSum / orders.size();
+
+        if(type == TYPE.LONG){
+            return (orders.get(0).getExitPrice() * 100) / enterPriceAVG - 100;
+        }else{
+            return 100 - (orders.get(0).getExitPrice() * 100) / enterPriceAVG;
+        }
+
+
+    }
+
+    public Double getProfitDeposit(double deposit, Double margin, Integer leverage, double v) {
+        return getTolalProfit(margin, leverage, 0.00005) * 100 / deposit;
     }
 }
