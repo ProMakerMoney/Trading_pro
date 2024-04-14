@@ -2,6 +2,7 @@ package com.example.trading_pro.order;
 
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,11 +34,15 @@ public class PrimeOrderDocumentAdapter extends RecyclerView.Adapter<PrimeOrderDo
         PrimeOrderDocument document = documents.get(position);
         holder.id.setText(document.getId().toString());
         holder.type.setText(document.getType().toString());
+        if(document.getPerProfitOrder() < 0){
+            holder.perProfitOrder.setTextColor(Color.RED);
+            holder.profit.setTextColor(Color.RED);
+            holder.perProfitDeposit.setTextColor(Color.RED);
+        }
         holder.margin.setText(String.format("%.2f", document.getMargin()) + "$");
         holder.perProfitOrder.setText(String.format("%.2f", document.getPerProfitOrder()) + "%");
         holder.profit.setText(String.format("%.2f", document.getProfit()) + "$");
         holder.perProfitDeposit.setText(String.format("%.2f", document.getPerProfitDeposit()) + "%");
-
     }
 
     @Override

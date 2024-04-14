@@ -3,6 +3,9 @@ package com.example.trading_pro;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -11,6 +14,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,6 +59,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -382,9 +387,14 @@ public class TradingFragment extends Fragment {
                 }
                 Collections.reverse(primeOrderList);
 
+
+
                 // Дальнейшая обработка списка primeOrderList
                 OrdersManager ordersManager = new OrdersManager(primeOrderList, DEPOSIT, RISK, LEVERAGE);
                 ordersManager.getPrimeOrderDocument();
+                // Предполагаем, что последняя сделка в списке - новая сделка
+
+
                 TOTAL_PROFIT = ordersManager.getTotalProfit();
                 FINAL_DEPOSIT = ordersManager.getDEPOSIT();
                 totalProfit.setText(String.format("%.2f",TOTAL_PROFIT));
@@ -397,5 +407,26 @@ public class TradingFragment extends Fragment {
         });
 
         return primeOrderList;
+    }
+
+    private void sendNotification(String notificationDetails) {
+        NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+
+        String channelId = "trading_notifications";
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    "Trading Notifications",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), channelId)
+                .setSmallIcon(R.drawable.profile_image_2) // Установите свой идентификатор ресурса иконки уведомления
+                .setContentTitle("Новая сделка")
+                .setContentText(notificationDetails)
+                .setAutoCancel(true);
+
+        notificationManager.notify(new Random().nextInt(), builder.build());
     }
 }
