@@ -65,7 +65,7 @@ public class TradingFragment extends Fragment {
 
     private Double DEPOSIT = 100.0;
     private Integer RISK = 10;
-    private Integer LEVERAGE = 5;
+    private Integer LEVERAGE = 27;
 
     private Double FINAL_DEPOSIT = DEPOSIT;
     private Double TOTAL_PROFIT = (double) 0;
@@ -178,9 +178,9 @@ public class TradingFragment extends Fragment {
                                 double pri = lastOrderLog.getPrice();
                                 String priceString = Double.toString(pri);
                                 price2.setText(priceString);
-                                orderNum.setText(lastOrderLog.getId().toString() + "/25");
+                                orderNum.setText(lastOrderLog.getId().toString() + "/17");
 
-                                marqueeTextView.setText(lastOrderLog.getId().toString() + "/25  ||  " + type.toString() + "  ||  " + priceString);
+                                marqueeTextView.setText(lastOrderLog.getId().toString() + "/17  ||  " + type.toString() + "  ||  " + priceString);
                             }
                         } else {
                             // Обработка ошибки
@@ -320,7 +320,7 @@ public class TradingFragment extends Fragment {
                     try {
                         DEPOSIT = Double.parseDouble(depositText);
                         RISK = Integer.parseInt(riskText);
-                        LEVERAGE = Integer.parseInt(leverageText);
+                        LEVERAGE = 27;
                         // Дальнейшие действия с данными
                         settings.setText("Деп: " + DEPOSIT + " || Риск: " + RISK + " || Плечо: " + LEVERAGE);
 
