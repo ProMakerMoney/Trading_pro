@@ -53,6 +53,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
@@ -377,6 +378,7 @@ public class TradingFragment extends Fragment {
                     PrimeOrder primeOrder = new PrimeOrder(id, orders, type);
                     primeOrderList.add(primeOrder);
                 }
+                Collections.reverse(primeOrderList);
 
                 // Дальнейшая обработка списка primeOrderList
                 OrdersManager ordersManager = new OrdersManager(primeOrderList, DEPOSIT, RISK, LEVERAGE);
