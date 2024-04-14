@@ -65,7 +65,7 @@ import java.util.regex.Pattern;
 
 public class TradingFragment extends Fragment {
 
-    private double DEPOSIT = 100;
+    private Double DEPOSIT = 100.0;
     private Integer RISK = 10;
     private Integer LEVERAGE = 5;
 
@@ -124,7 +124,7 @@ public class TradingFragment extends Fragment {
         marqueeTextView.setSelected(true);// Начинает анимацию бегущей полосы
 
         settings = rootView.findViewById(R.id.settings);
-        settings.setText(DEPOSIT + " || " + RISK + " || " + LEVERAGE);
+        settings.setText("Деп: " + DEPOSIT + " || Риск: " + RISK + " || Плечо: " + LEVERAGE);
 
         executorService = Executors.newSingleThreadScheduledExecutor();
         executorService.scheduleAtFixedRate(this::fetchPrice, 0, 2, TimeUnit.SECONDS);
@@ -306,6 +306,10 @@ public class TradingFragment extends Fragment {
         EditText deposit = dialogView.findViewById(R.id.deposit);
         EditText risk = dialogView.findViewById(R.id.risk);
         EditText leverage = dialogView.findViewById(R.id.leverage);
+
+        deposit.setText(DEPOSIT.toString());
+        risk.setText(RISK.toString());
+        leverage.setText(LEVERAGE.toString());
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -320,7 +324,7 @@ public class TradingFragment extends Fragment {
                         RISK = Integer.parseInt(riskText);
                         LEVERAGE = Integer.parseInt(leverageText);
                         // Дальнейшие действия с данными
-                        settings.setText(DEPOSIT + "  ||  " + RISK + "  ||  " + LEVERAGE);
+                        settings.setText("Деп: " + DEPOSIT + " || Риск: " + RISK + " || Плечо: " + LEVERAGE);
 
                         getPrimeOrders(recyclerView); ///!!!
 
