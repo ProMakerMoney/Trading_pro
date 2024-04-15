@@ -17,14 +17,13 @@ public class OrdersManager {
         this.DEPOSIT = DEPOSIT;
         this.RISK = RISK;
         this.LEVERAGE = LEVERAGE;
-        this.margin = (DEPOSIT * RISK/100 * LEVERAGE) / 25;
     }
 
     public List<PrimeOrderDocument> getPrimeOrderDocument(){
 
         List<PrimeOrderDocument> primeOrderDocumentList = new ArrayList<>();
 
-
+        margin = (DEPOSIT * RISK/100 * LEVERAGE) / 25;
         for(PrimeOrder primeOrder : primeOrderList){
             PrimeOrderDocument primeOrderDocument = new PrimeOrderDocument();
             primeOrderDocument.setId(primeOrder.getId());
@@ -38,6 +37,7 @@ public class OrdersManager {
 
             DEPOSIT = DEPOSIT + primeOrder.getTolalProfit(margin,LEVERAGE, 0.00005);
             totalProfit = totalProfit + primeOrder.getTolalProfit(margin,LEVERAGE, 0.00005);
+            margin = (DEPOSIT * RISK/100 * LEVERAGE) / 25;
         }
 
         return primeOrderDocumentList;

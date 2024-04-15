@@ -73,18 +73,13 @@ public class ProfileFragment extends Fragment {
             userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    System.out.println("БАРЬЕР 1");
                     if (task.isSuccessful()) {
-                        System.out.println("БАРЬЕР 2");
                         DocumentSnapshot document = task.getResult();
                         System.out.println(document);
                         if (document.exists()) {
-                            System.out.println("БАРЬЕР 3");
                             String name = document.getString("name");
                             String role = document.getString("role");
 
-                            System.out.println("NAME _ " + name);
-                            System.out.println("ROLE - " + role);
                             TextView userNameTextView = view.findViewById(R.id.userName);
                             TextView userRoleTextView = view.findViewById(R.id.userRole);
 

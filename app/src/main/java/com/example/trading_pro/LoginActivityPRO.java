@@ -195,16 +195,7 @@ public class LoginActivityPRO extends AppCompatActivity {
                                         } else {
                                             // Если вход не удался, выведите сообщение
                                             Log.w("Auth", "signInWithEmail:failure", task.getException());
-                                            LinearLayout layout = findViewById(R.id.login_anim);
-                                            android.view.animation.Animation fadeUp = AnimationUtils.loadAnimation(LoginActivityPRO.this, R.anim.move_up);
-                                            Animation fadeDown = AnimationUtils.loadAnimation(LoginActivityPRO.this, R.anim.move_down);
                                             // Проходимся по всем дочерним элементам LinearLayout
-                                            for (int i = 0; i < layout.getChildCount(); i++) {
-                                                // Получаем дочерний элемент
-                                                View child = layout.getChildAt(i);
-                                                child.setBackgroundColor(Color.parseColor("#93000A"));
-
-                                            }
                                             Toast.makeText(LoginActivityPRO.this, "Ошибка аутентификации.",
                                                     Toast.LENGTH_SHORT).show();
                                         }

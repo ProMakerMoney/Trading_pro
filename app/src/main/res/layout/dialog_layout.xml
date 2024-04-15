@@ -4,6 +4,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_background"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <LinearLayout
+        android:layout_width="275dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:background="@drawable/input"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:gravity="center"
+            android:fontFamily="@font/days_one_regular"
+            android:textSize="12sp"
+            android:scrollHorizontally="true" />
+
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="300dp"
         android:layout_height="180dp"
@@ -13,6 +46,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -112,6 +148,7 @@
             android:text="ОК"
             android:textColor="#fff" />
 
+    </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,13 +13,24 @@ public class OrderLog {
     private LocalDateTime time;
     private STATUS status;
 
-    public OrderLog(Integer orderId, Integer id, TYPE type, double price, LocalDateTime time, STATUS status) {
+    private Double avg;
+
+    public OrderLog(Integer orderId, Integer id, TYPE type, double price, LocalDateTime time, STATUS status, Double avg) {
         this.orderId = orderId;
         this.id = id;
         this.type = type;
         this.price = price;
         this.time = time;
         this.status = status;
+        this.avg = avg;
+    }
+
+    public Double getAvg() {
+        return avg;
+    }
+
+    public void setAvg(Double avg) {
+        this.avg = avg;
     }
 
     public Integer getOrderId() {

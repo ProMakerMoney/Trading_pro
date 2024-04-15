@@ -54,6 +54,6 @@ public class PrimeOrder {
     }
 
     public Double getProfitDeposit(double deposit, Double margin, Integer leverage, double v) {
-        return getTolalProfit(margin, leverage, 0.00005) * 100 / (deposit * leverage);
+        return getTolalProfit(margin, leverage, 0.00005) * 100 / (deposit);
     }
 }
