@@ -1,73 +1,45 @@
 package com.example.trading_pro;
 
-import static android.text.format.DateUtils.formatDateTime;
-
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.location.Location;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkCapabilities;
-import android.net.NetworkInfo;
-import android.os.Build;
+import android.content.SharedPreferences;
+
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.renderscript.Allocation;
-import android.renderscript.Element;
-import android.renderscript.RenderScript;
-import android.renderscript.ScriptIntrinsicBlur;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import com.airbnb.lottie.LottieAnimationView;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
+
+import com.example.trading_pro.auth.LoginRequest;
+import com.example.trading_pro.auth.LoginResponse;
+import com.google.gson.Gson;
+
+import java.io.IOException;
+
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 
 public class LoginActivityPRO extends AppCompatActivity {
-    private EditText emailEditText, passwordEditText;
-    private FirebaseAuth mAuth;
+    private EditText emailEditText;
+    private EditText passwordEditText;
+    private Button loginButton;
+    private TextView notRegisterTextView;
+    private CheckBox autoLoginCheckBox; // Добавить CheckBox
+    private static final String LOGIN_URL = "http://91.226.173.246:8080/api/auth/login";
+    private final OkHttpClient client = new OkHttpClient();
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,165 +47,126 @@ public class LoginActivityPRO extends AppCompatActivity {
 
         emailEditText = findViewById(R.id.email1);
         passwordEditText = findViewById(R.id.textPassword);
-        mAuth = FirebaseAuth.getInstance();
-        TextView notRegisterTextView = findViewById(R.id.notRegister);
+        loginButton = findViewById(R.id.button_start);
+        notRegisterTextView = findViewById(R.id.notRegister);
+        autoLoginCheckBox = findViewById(R.id.auto_login); // Инициализация CheckBox
 
-        PopupWindow popupWindow = new PopupWindow(
-                LayoutInflater.from(this).inflate(R.layout.popup_layout, null),
-                RelativeLayout.LayoutParams.MATCH_PARENT,
-                RelativeLayout.LayoutParams.MATCH_PARENT
-        );
+        SharedPreferences preferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        String savedEmail = preferences.getString("email", null);
+        String savedPassword = preferences.getString("password", null);
 
-        PopupWindow popupWindow2 = new PopupWindow(
-                LayoutInflater.from(this).inflate(R.layout.popup_layout2, null),
-                RelativeLayout.LayoutParams.MATCH_PARENT,
-                RelativeLayout.LayoutParams.MATCH_PARENT
-        );
+        if (savedEmail != null && savedPassword != null) {
+            // Если логин и пароль сохранены, пропустить ввод
+            autoLogin(savedEmail, savedPassword);
+            return;
+        }
 
-        LottieAnimationView loadingAnimation = popupWindow.getContentView().findViewById(R.id.loading_animation);
-        Button button = findViewById(R.id.button_start);
+        loginButton.setOnClickListener(v -> loginUser());
 
-        button.setOnClickListener(new View.OnClickListener() {
+        notRegisterTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivityPRO.this, RegisterActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    private void autoLogin(String email, String password) {
+        LoginRequest loginRequest = new LoginRequest(email, password);
+        Gson gson = new Gson();
+        String jsonRequest = gson.toJson(loginRequest);
+
+        RequestBody body = RequestBody.create(jsonRequest, MediaType.get("application/json; charset=utf-8"));
+        Request request = new Request.Builder()
+                .url(LOGIN_URL)
+                .post(body)
+                .build();
+        System.out.println("Автоматический запрос к серверу: " + request);
+
+        client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onClick(View v) {
-                String email = emailEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(() -> Toast.makeText(LoginActivityPRO.this, "Auto-login failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+            }
 
-                if (isVpnEnabled()) {
-                    popupWindow.showAtLocation(
-                            findViewById(android.R.id.content),
-                            Gravity.CENTER,
-                            0,
-                            0
-                    );
-                    if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
-                        mAuth.signInWithEmailAndPassword(email, password)
-                                .addOnCompleteListener(LoginActivityPRO.this, new OnCompleteListener<AuthResult>() {
-                                    @SuppressLint({"ResourceAsColor", "MissingPermission"})
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (task.isSuccessful()) {
-                                            // Успешный вход, обновите UI с информацией о пользователе
-                                            Log.d("Auth", "signInWithEmail:success");
-                                            FirebaseUser user = mAuth.getCurrentUser();
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseBody = response.body().string();
+                System.out.println("Ответ сервера при авто-логине: " + responseBody);
 
-                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                                getWindow().setStatusBarColor(getResources().getColor(R.color.status_bar_green));
-                                            }
-
-
-                                            Toast.makeText(LoginActivityPRO.this, "Успешный вход",
-                                                    Toast.LENGTH_SHORT).show();
-                                            popupWindow.dismiss();
-                                            popupWindow2.showAtLocation(
-                                                    findViewById(android.R.id.content),
-                                                    Gravity.CENTER,
-                                                    0,
-                                                    0
-                                            );
-
-
-                                            // Получаем геолокацию пользователя
-                                            FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(LoginActivityPRO.this);
-                                            FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                                            assert currentUser != null;
-                                            String userId = currentUser.getUid();
-                                            fusedLocationClient.getLastLocation()
-                                                    .addOnSuccessListener(new OnSuccessListener<Location>() {
-                                                        @Override
-                                                        public void onSuccess(Location location) {
-                                                            // Если местоположение получено успешно
-                                                            if (location != null) {
-                                                                double latitude = location.getLatitude();
-                                                                double longitude = location.getLongitude();
-
-                                                                Map<String, Object> userData = new HashMap<>();
-
-                                                                // Создаем объект GeoPoint с полученными координатами
-                                                                userData.put("location", location); // Добавляем геометку в userData
-                                                                LocalDateTime currentDateTime = LocalDateTime.now();
-                                                                String formattedDateTime = formatDateTime(currentDateTime, "yyyy-MM-dd HH:mm:ss");
-                                                                userData.put("dataTime", formattedDateTime);
-
-                                                                db.collection("users").document(userId).collection("entrances").document(formattedDateTime)
-                                                                        .set(userData)
-                                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                            @Override
-                                                                            public void onSuccess(Void aVoid) {
-                                                                                // Данные пользователя успешно сохранены
-                                                                            }
-                                                                        })
-                                                                        .addOnFailureListener(new OnFailureListener() {
-                                                                            @Override
-                                                                            public void onFailure(@NonNull Exception e) {
-                                                                                // Обработка ошибки сохранения данных
-                                                                            }
-                                                                        });
-                                                            } else {
-                                                                // Местоположение не получено, необходимо обработать эту ситуацию
-                                                            }
-                                                        }
-                                                    });
-
-                                            // Добавление паузы перед переходом
-                                            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    popupWindow.dismiss();
-                                                    popupWindow2.showAtLocation(
-                                                            findViewById(android.R.id.content),
-                                                            Gravity.CENTER,
-                                                            0,
-                                                            0
-                                                    );
-                                                    Intent intent = new Intent(LoginActivityPRO.this, NavigationActivity.class);
-                                                    startActivity(intent);
-                                                    finish();
-                                                }
-                                            }, 4000); // Пауза в 2000 миллисекунд (2 секунды)
-                                        } else {
-                                            // Если вход не удался, выведите сообщение
-                                            Log.w("Auth", "signInWithEmail:failure", task.getException());
-                                            // Проходимся по всем дочерним элементам LinearLayout
-                                            Toast.makeText(LoginActivityPRO.this, "Ошибка аутентификации.",
-                                                    Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
-                    } else {
-                        Toast.makeText(LoginActivityPRO.this, "Введите email и пароль.", Toast.LENGTH_SHORT).show();
-                    }
-                }else {
-                    Toast.makeText(LoginActivityPRO.this, "VPN выключен!", Toast.LENGTH_SHORT).show();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        getWindow().setStatusBarColor(getResources().getColor(R.color.md_theme_dark_errorContainer));
-                    }
+                if (response.isSuccessful()) {
+                    Gson gson = new Gson();
+                    LoginResponse loginResponse = gson.fromJson(responseBody, LoginResponse.class);
+                    saveToken(loginResponse.getToken());
+                    runOnUiThread(() -> {
+                        Toast.makeText(LoginActivityPRO.this, "Auto-login successful", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LoginActivityPRO.this, NavigationActivity.class);
+                        startActivity(intent);
+                        finish();
+                    });
+                } else {
+                    runOnUiThread(() -> Toast.makeText(LoginActivityPRO.this, "Auto-login failed: " + responseBody, Toast.LENGTH_SHORT).show());
                 }
-
             }
         });
+    }
 
-        notRegisterTextView.setOnClickListener(new View.OnClickListener() {
+    private void loginUser() {
+        String email = emailEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+
+        LoginRequest loginRequest = new LoginRequest(email, password);
+        Gson gson = new Gson();
+        String jsonRequest = gson.toJson(loginRequest);
+
+        RequestBody body = RequestBody.create(jsonRequest, MediaType.get("application/json; charset=utf-8"));
+        Request request = new Request.Builder()
+                .url(LOGIN_URL)
+                .post(body)
+                .build();
+        System.out.println("Запрос к серверу: " + request);
+
+        client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onClick(View v) {
-                // Запуск новой активности для регистрации
-                Intent intent = new Intent(LoginActivityPRO.this, RegisterActivity.class);
-                startActivity(intent);
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(() -> Toast.makeText(LoginActivityPRO.this, "Login failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseBody = response.body().string();
+                System.out.println("Ответ сервера: " + responseBody);
+
+                if (response.isSuccessful()) {
+                    Gson gson = new Gson();
+                    LoginResponse loginResponse = gson.fromJson(responseBody, LoginResponse.class);
+                    saveToken(loginResponse.getToken());
+                    if (autoLoginCheckBox.isChecked()) {
+                        saveLoginDetails(email, password);
+                    }
+                    runOnUiThread(() -> {
+                        Toast.makeText(LoginActivityPRO.this, "Login successful", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LoginActivityPRO.this, NavigationActivity.class);
+                        startActivity(intent);
+                        finish();
+                    });
+                } else {
+                    runOnUiThread(() -> Toast.makeText(LoginActivityPRO.this, "Login failed: " + responseBody, Toast.LENGTH_SHORT).show());
+                }
             }
         });
     }
 
-    private boolean isVpnEnabled() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        Network activeNetwork = connectivityManager.getActiveNetwork();
-        NetworkCapabilities networkCapabilities = connectivityManager.getNetworkCapabilities(activeNetwork);
-        return networkCapabilities != null && networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN);
+    private void saveToken(String token) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("token", token);
+        editor.apply();
     }
 
-    public static String formatDateTime(LocalDateTime dateTime, String pattern) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-        return dateTime.format(formatter);
+    private void saveLoginDetails(String email, String password) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("email", email);
+        editor.putString("password", password);
+        editor.apply();
     }
-
 }

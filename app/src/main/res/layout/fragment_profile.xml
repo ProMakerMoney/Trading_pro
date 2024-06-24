@@ -70,15 +70,6 @@
                         android:textColor="#AE000000"
                         android:fontFamily="@font/days_one_regular"/>
 
-                    <TextView
-                        android:id="@+id/userRole"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_gravity="center_horizontal"
-                        android:textSize="12sp"
-                        android:textColor="#AE000000"
-                        android:fontFamily="@font/days_one_regular"/>
 
                 </LinearLayout>
 
@@ -220,12 +211,21 @@
 
             </LinearLayout>
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/logout"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:background="@drawable/rounded_red"
+                android:textColor="#000000"
+                android:text="Выйти"
+                android:fontFamily="@font/days_one_regular"
+                />
+
 
 
         </LinearLayout>
-
-
-
 
 
 

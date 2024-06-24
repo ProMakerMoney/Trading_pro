@@ -46,18 +46,15 @@ dependencies {
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
-
-    implementation platform(libs.firebase.bom)
-    implementation libs.firebase.auth // Проверьте, что используется последняя версия
-
     implementation libs.navigation.compose
-    implementation libs.firebase.firestore // Убедитесь, что используете последнюю версию
     implementation libs.recyclerview
     implementation libs.cardview
     implementation libs.lottie
     implementation libs.swiperefreshlayout
-    implementation libs.play.services.location
-    implementation libs.bybit.java.api
     implementation libs.json
+    implementation libs.converter.gson
+    implementation libs.logging.interceptor
+    implementation libs.okhttp
+    implementation libs.fk.blur.view.android
 }
 

@@ -1,10 +1,14 @@
 package com.example.trading_pro;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -12,37 +16,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.CompoundButton;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.switchmaterial.SwitchMaterial;
-import com.google.firebase.Firebase;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class ProfileFragment extends Fragment {
-
-
 
     public ProfileFragment() {
         // Required empty public constructor
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -54,49 +38,32 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Получаем ссылку на активность, которая содержит этот фрагмент
-        Activity activity = requireActivity();
 
-        // Изменяем цвет статус-бара на активности
-        Window window = activity.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(getResources().getColor(R.color.md_theme_light_shadow));
+        // Проверяем, прикреплен ли фрагмент к активности перед использованием активности
+        if (isAdded()) {
+            Activity activity = getActivity();
+            if (activity != null) {
+                // Изменяем цвет статус-бара на активности
+                Window window = activity.getWindow();
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(getResources().getColor(R.color.md_theme_light_shadow));
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                // Найдите кнопку "Выйти" и установите для нее обработчик нажатия
+                AppCompatButton logoutButton = view.findViewById(R.id.logout);
+                logoutButton.setOnClickListener(v -> {
+                    // Очистите сохраненные данные пользователя
+                    SharedPreferences sharedPreferences = activity.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.clear();  // Очистить все данные
+                    editor.apply();
 
-        if (currentUser != null) {
-            String userId = currentUser.getUid();
-            System.out.println("UID - " + userId);
-
-            DocumentReference userRef = db.collection("users").document(userId);
-            userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        System.out.println(document);
-                        if (document.exists()) {
-                            String name = document.getString("name");
-                            String role = document.getString("role");
-
-                            TextView userNameTextView = view.findViewById(R.id.userName);
-                            TextView userRoleTextView = view.findViewById(R.id.userRole);
-
-                            userNameTextView.setText(name);
-                            userRoleTextView.setText(role);
-                        } else {
-                            // Документ пользователя не найден
-                        }
-                    } else {
-                        // Ошибка при получении документа пользователя
-                    }
-                }
-            });
-        } else {
-            // Пользователь не авторизован
+                    // Вернуть пользователя на экран входа
+                    Intent intent = new Intent(activity, LoginActivityPRO.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    activity.finish();  // Завершить текущую активность
+                });
+            }
         }
-
     }
-
 }

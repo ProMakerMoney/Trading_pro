@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/button_gradient"
+    android:background="@drawable/back_gradient"
     tools:context=".TradingFragment">
 
 
@@ -14,16 +14,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp">
 
 
+
         <LinearLayout
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/rounded_button"
             android:orientation="horizontal"
             android:padding="5dp">
@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
                     android:fontFamily="@font/days_one_regular"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:text="Сервер №1"
+                    android:text="Сервер:"
                     android:textColor="#fff"
                     android:textSize="20dp" />
 
@@ -51,494 +51,98 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/days_one_regular"
                     android:gravity="center"
-                    android:text="Пашет"
+                    android:text=""
+                    android:layout_margin="10dp"
                     android:textColor="#fff"
                     android:textSize="15dp" />
 
             </LinearLayout>
 
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/days_one_regular"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="Сервер №2"
-                    android:textColor="#fff"
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:id="@+id/server_status_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/days_one_regular"
-                    android:gravity="center"
-                    android:text="Отдыхает"
-                    android:textColor="#fff"
-                    android:textSize="15dp" />
-
-            </LinearLayout>
 
 
         </LinearLayout>
 
 
         <LinearLayout
-            android:layout_width="300dp"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_gravity="center"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/input"
+            android:layout_marginTop="10dp"
+            android:padding="3dp"
             android:gravity="center"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:background="@drawable/input3">
 
-            <LinearLayout
-                android:layout_width="170dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/rounded_button"
+            <TextView
+                android:id="@+id/coin_name"
+                android:layout_width="110dp"
+                android:layout_height="35dp"
+                android:layout_marginHorizontal="3dp"
+                android:textSize="12sp"
+                android:padding="3dp"
+                android:background="@drawable/round_background"
+                android:textColor="#fff"
+                android:fontFamily="@font/days_one_regular"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:text="Монета" />
 
-                <TextView
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="5dp"
-                    android:fontFamily="@font/days_one_regular"
-                    android:gravity="center"
-                    android:text="SOL"
-                    android:textColor="#fff"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/price"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/days_one_regular"
-                    android:gravity="center"
-                    android:textColor="#fff"
-                    android:textSize="15sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/rounded_button"
+            <TextView
+                android:id="@+id/timeframe"
+                android:layout_width="85dp"
+                android:layout_height="35dp"
+                android:layout_marginHorizontal="3dp"
+                android:textSize="12sp"
+                android:padding="3dp"
+                android:background="@drawable/round_background"
+                android:textColor="#fff"
+                android:fontFamily="@font/days_one_regular"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:text="Таймфрейм" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:fontFamily="@font/days_one_regular"
-                        android:text="Сделка"
-                        android:textColor="#fff"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/type_order"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:fontFamily="@font/days_one_regular"
-                        android:text=" "
-                        android:textColor="#fff"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:id="@+id/numOrder"
-                        android:layout_width="80dp"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/days_one_regular"
-                        android:gravity="center"
-                        android:text="0/25"
-                        android:textColor="#fff"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/margin"
-                        android:layout_width="80dp"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/days_one_regular"
-                        android:gravity="center"
-                        android:text="100$"
-                        android:textColor="#fff"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/current_price"
-                        android:layout_width="80dp"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/days_one_regular"
-                        android:gravity="center"
-                        android:text="000.00"
-                        android:textColor="#fff"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/order_color"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@drawable/input3"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:id="@+id/current_per"
-                        android:layout_width="100dp"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/days_one_regular"
-                        android:gravity="center"
-                        android:text="+12.00%"
-                        android:textColor="#fff"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/current_profit"
-                        android:layout_width="100dp"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/days_one_regular"
-                        android:gravity="center"
-                        android:text="(+0.52$)"
-                        android:textColor="#fff"
-                        android:textSize="17sp" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/days_one_regular"
-                        android:gravity="center"
-                        android:text="TP:"
-                        android:textColor="#49F436"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/take_profit"
-                        android:layout_width="70dp"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/days_one_regular"
-                        android:gravity="center"
-                        android:text="---.--"
-                        android:textColor="#fff"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/take_profit_per"
-                        android:layout_width="70dp"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/days_one_regular"
-                        android:gravity="center"
-                        android:text="--.--%"
-                        android:textColor="#fff"
-                        android:textSize="15sp" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/days_one_regular"
-                        android:gravity="center"
-                        android:text="SL:"
-                        android:textColor="#F44336"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/stop_loss"
-                        android:layout_width="70dp"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/days_one_regular"
-                        android:gravity="center"
-                        android:text="---.--"
-                        android:textColor="#fff"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/stop_loss_per"
-                        android:layout_width="70dp"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/days_one_regular"
-                        android:gravity="center"
-                        android:text="--.-%"
-                        android:textColor="#fff"
-                        android:textSize="15sp" />
-
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
+            <TextView
+                android:id="@+id/is_counted"
+                android:layout_width="95dp"
+                android:layout_height="35dp"
+                android:padding="3dp"
+                android:layout_marginHorizontal="3dp"
+                android:textSize="12sp"
+                android:background="@drawable/round_background"
+                android:textColor="#fff"
+                android:fontFamily="@font/days_one_regular"
+                android:gravity="center"
+                android:text="Статус" />
 
         </LinearLayout>
 
-
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_width="340dp"
+            android:layout_height="290dp"
+            android:layout_marginTop="3dp"
             android:layout_gravity="center"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/rounded_button"
-            android:gravity="center_horizontal"
+            android:gravity="center"
+            android:background="@drawable/input"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/item_strategy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/input2"
-                android:gravity="center"
-                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/order_id"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="2dp"
-                    android:background="@drawable/rounded_button"
-                    android:fontFamily="@font/days_one_regular"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="№"
-                    android:textColor="#fff"
-                    android:textSize="10sp" />
-
-                <TextView
-                    android:id="@+id/order_type"
-                    android:layout_width="60dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="2dp"
-                    android:background="@drawable/rounded_button"
-                    android:fontFamily="@font/days_one_regular"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="L/S"
-                    android:textColor="#fff"
-                    android:textSize="10sp" />
-
-                <TextView
-                    android:id="@+id/order_margin"
-                    android:layout_width="60dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="2dp"
-                    android:background="@drawable/rounded_button"
-                    android:fontFamily="@font/days_one_regular"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="Маржа"
-                    android:textColor="#fff"
-                    android:textSize="10sp" />
-
-                <TextView
-                    android:id="@+id/order_profit_per"
-                    android:layout_width="50dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/rounded_button"
-                    android:fontFamily="@font/days_one_regular"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="% мар"
-                    android:textColor="#fff"
-                    android:textSize="10sp" />
-
-                <TextView
-                    android:id="@+id/order_profit"
-                    android:layout_width="60dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="2dp"
-                    android:background="@drawable/rounded_button"
-                    android:fontFamily="@font/days_one_regular"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="Профит"
-                    android:textColor="#fff"
-                    android:textSize="10sp" />
-
-                <TextView
-                    android:id="@+id/order_per"
-                    android:layout_width="60dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="2dp"
-                    android:background="@drawable/rounded_button"
-                    android:fontFamily="@font/days_one_regular"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="% деп"
-                    android:textColor="#fff"
-                    android:textSize="10sp" />
-
-            </LinearLayout>
-
-            <RelativeLayout
-                android:id="@+id/swipeRefreshLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/trading_info"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:padding="1dp"
-                    android:scrollbars="vertical"
-                    tools:listitem="@layout/item_order" />
-
-            </RelativeLayout>
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/input"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-
-        <LinearLayout
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:background="@drawable/rounded_button"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="3dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/days_one_regular"
-                android:text="D:"
-                android:textColor="#fff"
-                android:textSize="15dp" />
-
-            <TextView
-                android:id="@+id/final_deposit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:fontFamily="@font/days_one_regular"
-                android:text="1025 $"
-                android:textColor="#fff"
-                android:textSize="15dp" />
+            <!-- Добавляем RecyclerView для списка монет -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                tools:listitem="@layout/item_coin" />
 
         </LinearLayout>
 
-
-        <LinearLayout
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/rounded_button"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="3dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/days_one_regular"
-                android:text="Pr:"
-                android:textColor="#fff"
-                android:textSize="15dp" />
-
-            <TextView
-                android:id="@+id/totalProfit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:fontFamily="@font/days_one_regular"
-                android:text="+25 $"
-                android:textColor="#fff"
-                android:textSize="15dp" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="40dp"
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="120dp"
             android:layout_height="40dp"
             android:layout_margin="10dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:text="Добавить"
+            android:fontFamily="@font/days_one_regular"
+            android:layout_gravity="center"
+            android:textColor="#fff"
+            android:background="@drawable/input3"/>
 
-            <ImageButton
-                android:id="@+id/lolButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/rounded_gray"
-                android:scaleType="fitXY"
-                android:src="@drawable/setting" />
-
-        </LinearLayout>
 
 
     </LinearLayout>
