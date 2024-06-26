@@ -7,18 +7,6 @@
     tools:context=".LoginActivityPRO">
 
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animation_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="a5.json"
-        android:rotation="90"
-        android:scaleX="2.3"
-        android:scaleY="2.1"
-        app:lottie_loop="true"/>
-
-
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -125,7 +113,7 @@
             android:text="Войти"
             android:textColor="#FFFF"
             android:textSize="20sp"
-            android:background="@drawable/input3"/>
+            android:background="@drawable/input2"/>
 
     </LinearLayout>
 

@@ -49,12 +49,12 @@ dependencies {
     implementation libs.navigation.compose
     implementation libs.recyclerview
     implementation libs.cardview
-    implementation libs.lottie
     implementation libs.swiperefreshlayout
     implementation libs.json
     implementation libs.converter.gson
     implementation libs.logging.interceptor
     implementation libs.okhttp
     implementation libs.fk.blur.view.android
+    implementation libs.mpandroidchart
 }
 

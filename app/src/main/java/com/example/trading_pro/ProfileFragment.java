@@ -16,9 +16,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
+
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ProfileFragment extends Fragment {
+
+    private LineChart lineChart;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -32,6 +45,47 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        // Инициализация графика
+        lineChart = new LineChart(getContext());
+        FrameLayout chartContainer = rootView.findViewById(R.id.chartContainer);
+        chartContainer.addView(lineChart);
+
+        // Создание данных для графика
+        List<Entry> entries = new ArrayList<>();
+        entries.add(new Entry(0, 100));
+        entries.add(new Entry(1, 180));
+        entries.add(new Entry(2, 420));
+        entries.add(new Entry(3, 535));
+
+        LineDataSet dataSet = new LineDataSet(entries, "Label");
+        dataSet.setColor(R.color.status_bar_green); // Установка цвета линии
+        dataSet.setLineWidth(2f); // Установка толщины линии
+        dataSet.setFillColor(R.color.status_bar_green); // Установка цвета заливки
+        dataSet.setDrawFilled(true); // Включение заливки под графиком
+
+        LineData lineData = new LineData(dataSet);
+        lineChart.setData(lineData);
+
+
+        // Настройка графика
+        lineChart.getDescription().setEnabled(false); // Отключить описание графика
+        lineChart.getLegend().setEnabled(false); // Отключить легенду
+
+        // Настройка оси X
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setEnabled(false); // Отключить ось X
+
+        // Настройка оси Y
+        YAxis leftAxis = lineChart.getAxisLeft();
+        leftAxis.setDrawGridLines(false); // Отключить сетку по левой оси Y
+        leftAxis.setGranularity(50f); // Шаг оси Y
+
+        YAxis rightAxis = lineChart.getAxisRight();
+        rightAxis.setEnabled(false); // Отключить правую ось Y
+
+        lineChart.invalidate(); // refresh
+
         return rootView;
     }
 

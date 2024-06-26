@@ -2,21 +2,10 @@
 <resources>
 
     <color name="md_theme_light_onPrimary">#FFFFFF</color>
-
     <color name="md_theme_light_secondaryContainer">#BBE6F1</color>
-
-
-
-
-
     <color name="md_theme_light_shadow">#000000</color>
-
-
     <color name="md_theme_dark_errorContainer">#93000A</color>
     <color name="md_theme_dark_onError">#690005</color>
-
-
-
     <color name="status_bar_green">#CD07D865</color>
 
 </resources>

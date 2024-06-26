@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/back_gradient"
     tools:context=".TradingFragment">
 
 
@@ -16,7 +15,6 @@
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp">
-
 
 
         <LinearLayout
@@ -57,9 +55,6 @@
                     android:textSize="15dp" />
 
             </LinearLayout>
-
-
-
         </LinearLayout>
 
 
@@ -120,7 +115,7 @@
             android:layout_marginTop="3dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:background="@drawable/input"
+            android:background="@drawable/input3"
             android:orientation="vertical">
 
 
@@ -134,14 +129,14 @@
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="120dp"
-            android:layout_height="40dp"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
             android:layout_margin="10dp"
             android:text="Добавить"
             android:fontFamily="@font/days_one_regular"
             android:layout_gravity="center"
             android:textColor="#fff"
-            android:background="@drawable/input3"/>
+            android:background="@drawable/input2"/>
 
 
 

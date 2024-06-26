@@ -1,5 +1,5 @@
 [versions]
-agp = "8.3.1"
+agp = "8.5.0"
 alibaba = "1.0.3"
 bottomNavigationBar = "2.0.5"
 bubblenavigation = "1.0.7"
@@ -21,6 +21,7 @@ lottie = "5.2.0"
 material = "1.10.0"
 constraintlayout = "2.1.4"
 materialVersion = "1.6.1"
+mpandroidchart = "v3.1.0"
 navigationCompose = "2.7.7"
 navigationFragment = "2.6.0"
 navigationUi = "2.6.0"
@@ -54,6 +55,7 @@ lottie = { module = "com.airbnb.android:lottie", version = "6.4.1" }
 material = { group = "com.google.android.material", name = "material", version = "1.12.0" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 material-v161 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
+mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart" }
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version = "2.7.7" }

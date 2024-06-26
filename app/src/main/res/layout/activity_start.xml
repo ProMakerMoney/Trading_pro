@@ -6,14 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".StartActivity">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animation_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="a5.json"
-        app:lottie_loop="true"
-        android:scaleType="centerCrop"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -41,13 +33,13 @@
         android:textColor="#FFFF"
         android:textSize="40dp" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_start"
         android:layout_width="150sp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView"
         android:layout_marginTop="140dp"
-        android:background="@drawable/rounded_button"
+        android:background="@drawable/input2"
         android:fontFamily="@font/days_one_regular"
         android:text="Начать"
         android:layout_centerHorizontal="true"
