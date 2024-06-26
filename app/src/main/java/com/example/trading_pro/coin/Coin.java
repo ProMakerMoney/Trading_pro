@@ -1,24 +1,49 @@
 package com.example.trading_pro.coin;
 
+
 import java.io.Serializable;
 
 public class Coin implements Serializable {
-    private int id;
+
+    private Long id;
     private String coinName;
     private String timeframe;
+    private long dateOfAddition;
+    private double minTradingQty;
+    private double maxTradingQty;
+    private int minLeverage;
+    private int maxLeverage;
+    private boolean dataCheck;
     private boolean isCounted;
+    private long startDateTimeCounted;
+    private long endDateTimeCounted;
 
-    // Конструктор
-    public Coin(int id, String coinName, String timeframe, boolean isCounted) {
+    public Coin(Long id, String coinName, String timeframe, long dateOfAddition, double minTradingQty, double maxTradingQty, int minLeverage, int maxLeverage, boolean dataCheck, boolean isCounted, long startDateTimeCounted, long endDateTimeCounted) {
         this.id = id;
         this.coinName = coinName;
         this.timeframe = timeframe;
+        this.dateOfAddition = dateOfAddition;
+        this.minTradingQty = minTradingQty;
+        this.maxTradingQty = maxTradingQty;
+        this.minLeverage = minLeverage;
+        this.maxLeverage = maxLeverage;
+        this.dataCheck = dataCheck;
+        this.isCounted = isCounted;
+        this.startDateTimeCounted = startDateTimeCounted;
+        this.endDateTimeCounted = endDateTimeCounted;
+    }
+
+
+    public void setIsCounted(boolean isCounted) {
         this.isCounted = isCounted;
     }
 
-    // Геттеры
-    public int getId() {
-        return id;
+    public Object getDataCheck() {
+        return dataCheck;
+    }
+
+    public Object getIsCounted() {
+        return isCounted;
     }
 
     public String getCoinName() {
@@ -29,7 +54,7 @@ public class Coin implements Serializable {
         return timeframe;
     }
 
-    public boolean isCounted() {
+    public Boolean isCounted() {
         return isCounted;
     }
 }

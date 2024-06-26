@@ -1,20 +1,16 @@
 package com.example.trading_pro;
 
-
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import android.os.Handler;
 import android.os.Looper;
@@ -24,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 
 import com.example.trading_pro.coin.Coin;
 import com.example.trading_pro.coin.CoinAdapter;
@@ -55,7 +50,7 @@ public class TradingFragment extends Fragment {
     private CoinAdapter coinAdapter;
     private List<Coin> coinList;
     private String urlStatus = "http://91.226.173.246:8080/api/server/status";
-    private String urlCoins = "http://91.226.173.246:8080/api/coins/all";
+    private String urlCoins = "http://91.226.173.246:8080/api/coin/getAll";
 
     public TradingFragment() {
         // Required empty public constructor
@@ -115,7 +110,7 @@ public class TradingFragment extends Fragment {
                 .addHeader("Authorization", "Bearer " + getToken()) // Добавление заголовка Authorization
                 .build();
 
-        System.out.println("Выполняем запрос: " + request);
+        //System.out.println("Выполняем запрос: " + request);
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -125,7 +120,7 @@ public class TradingFragment extends Fragment {
                     @Override
                     public void run() {
                         if (isAdded() && getContext() != null) {
-                            System.out.println("ON FAILURE");
+                            //System.out.println("ON FAILURE");
                             statusServerOne.setText("Сервер недоступен!");
                             layoutServerOne.setBackground(getResources().getDrawable(R.drawable.rounded_red));
                         }
@@ -135,7 +130,7 @@ public class TradingFragment extends Fragment {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                System.out.println("Запрос успешен: " + response);
+                //System.out.println("Запрос успешен: " + response);
                 try (ResponseBody responseBody = response.body()) {
                     if (response.isSuccessful() && responseBody != null) {
                         final String responseText = responseBody.string();
@@ -193,12 +188,20 @@ public class TradingFragment extends Fragment {
             coinList.clear();
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                int id = jsonObject.getInt("id");
+                Long id = jsonObject.getLong("id");
                 String coinName = jsonObject.getString("coinName");
                 String timeframe = jsonObject.getString("timeframe");
+                long dateOfAddition = jsonObject.getLong("dateOfAddition");
+                double minTradingQty = jsonObject.getDouble("minTradingQty");
+                double maxTradingQty = jsonObject.getDouble("maxTradingQty");
+                int minLeverage = jsonObject.getInt("minLeverage");
+                int maxLeverage = jsonObject.getInt("maxLeverage");
+                boolean dataCheck = jsonObject.getBoolean("dataCheck");
                 boolean isCounted = jsonObject.getBoolean("isCounted");
+                long startDateTimeCounted = jsonObject.getLong("startDateTimeCounted");
+                long endDateTimeCounted = jsonObject.getLong("endDateTimeCounted");
 
-                Coin coin = new Coin(id, coinName, timeframe, isCounted);
+                Coin coin = new Coin(id, coinName, timeframe, dateOfAddition, minTradingQty, maxTradingQty, minLeverage, maxLeverage, dataCheck, isCounted, startDateTimeCounted, endDateTimeCounted);
                 coinList.add(coin);
             }
 

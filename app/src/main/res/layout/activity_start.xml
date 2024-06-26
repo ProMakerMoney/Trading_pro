@@ -1,49 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center"
     tools:context=".StartActivity">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#4D000000" />
-
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="170dp"
-        android:text="Pin Bot"
-        android:textSize="85dp"
-        android:fontFamily="@font/days_one_regular"
-        android:layout_centerHorizontal="true"
-        android:textColor="#FFFF"/>
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="340dp"
-        android:layout_height="232dp"
-        android:layout_marginLeft="17dp"
-        android:layout_marginTop="350dp"
-        android:layout_marginRight="18dp"
-        android:fontFamily="@font/days_one_regular"
-        android:text="Откройте мир безграничных возможностей!"
-        android:textColor="#FFFF"
-        android:textSize="40dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pin Bot"
+            android:textSize="85dp"
+            android:fontFamily="@font/days_one_regular"
+            android:textColor="#E6009688"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_start"
-        android:layout_width="150sp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
-        android:layout_marginTop="140dp"
-        android:background="@drawable/input2"
-        android:fontFamily="@font/days_one_regular"
-        android:text="Начать"
-        android:layout_centerHorizontal="true"
-        android:textColor="#FFFF"
-        android:textSize="20sp" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_start"
+            android:layout_width="150sp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/input2"
+            android:fontFamily="@font/days_one_regular"
+            android:text="Начать"
+            android:textColor="#FFFF"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+
 
 </RelativeLayout>

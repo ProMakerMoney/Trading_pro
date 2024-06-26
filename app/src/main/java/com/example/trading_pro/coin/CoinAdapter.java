@@ -1,5 +1,6 @@
 package com.example.trading_pro.coin;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,7 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
             isCounted = itemView.findViewById(R.id.is_counted);
         }
 
+        @SuppressLint("SetTextI18n")
         public void bind(final Coin coin, final OnItemClickListener listener) {
             coinName.setText(coin.getCoinName());
             timeframe.setText("T/F: " + coin.getTimeframe());

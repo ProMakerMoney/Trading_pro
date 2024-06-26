@@ -5,7 +5,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.trading_pro.R;
 import com.example.trading_pro.coin.Coin;
 
 public class CoinDetailActivity extends AppCompatActivity {

@@ -118,7 +118,6 @@
             android:background="@drawable/input3"
             android:orientation="vertical">
 
-
             <!-- Добавляем RecyclerView для списка монет -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
