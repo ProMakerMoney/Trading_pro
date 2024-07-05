@@ -9,8 +9,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.trading_pro.auth.LoginRequest;
-import com.example.trading_pro.auth.LoginResponse;
 import com.google.gson.Gson;
 import java.io.IOException;
 import okhttp3.Call;
@@ -23,12 +21,12 @@ import okhttp3.Response;
 
 
 public class LoginActivityPRO extends AppCompatActivity {
-    private EditText emailEditText;
+    private EditText usernameEditText;  // Изменить имя переменной на username
     private EditText passwordEditText;
     private Button loginButton;
     private TextView notRegisterTextView;
-    private CheckBox autoLoginCheckBox; // Добавить CheckBox
-    private static final String LOGIN_URL = "http://91.226.173.246:8080/api/auth/login";
+    private CheckBox autoLoginCheckBox;
+    private static final String LOGIN_URL = "http://91.226.173.246:8080/authenticate";
     private final OkHttpClient client = new OkHttpClient();
 
     @Override
@@ -36,19 +34,18 @@ public class LoginActivityPRO extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_pro);
 
-        emailEditText = findViewById(R.id.email1);
+        usernameEditText = findViewById(R.id.email1);  // Переименовать в соответствии с username
         passwordEditText = findViewById(R.id.textPassword);
         loginButton = findViewById(R.id.button_start);
         notRegisterTextView = findViewById(R.id.notRegister);
-        autoLoginCheckBox = findViewById(R.id.auto_login); // Инициализация CheckBox
+        autoLoginCheckBox = findViewById(R.id.auto_login);
 
         SharedPreferences preferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-        String savedEmail = preferences.getString("email", null);
+        String savedUsername = preferences.getString("username", null);  // Использовать username
         String savedPassword = preferences.getString("password", null);
 
-        if (savedEmail != null && savedPassword != null) {
-            // Если логин и пароль сохранены, пропустить ввод
-            autoLogin(savedEmail, savedPassword);
+        if (savedUsername != null && savedPassword != null) {
+            autoLogin(savedUsername, savedPassword);
             return;
         }
 
@@ -60,8 +57,8 @@ public class LoginActivityPRO extends AppCompatActivity {
         });
     }
 
-    private void autoLogin(String email, String password) {
-        LoginRequest loginRequest = new LoginRequest(email, password);
+    private void autoLogin(String username, String password) {
+        LoginRequest loginRequest = new LoginRequest(username, password);
         Gson gson = new Gson();
         String jsonRequest = gson.toJson(loginRequest);
 
@@ -85,8 +82,8 @@ public class LoginActivityPRO extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
                     Gson gson = new Gson();
-                    LoginResponse loginResponse = gson.fromJson(responseBody, LoginResponse.class);
-                    saveToken(loginResponse.getToken());
+                    JwtResponse jwtResponse = gson.fromJson(responseBody, JwtResponse.class);
+                    saveToken(jwtResponse.getToken());
                     runOnUiThread(() -> {
                         Toast.makeText(LoginActivityPRO.this, "Auto-login successful", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(LoginActivityPRO.this, NavigationActivity.class);
@@ -101,10 +98,10 @@ public class LoginActivityPRO extends AppCompatActivity {
     }
 
     private void loginUser() {
-        String email = emailEditText.getText().toString();
+        String username = usernameEditText.getText().toString();  // Использовать username
         String password = passwordEditText.getText().toString();
 
-        LoginRequest loginRequest = new LoginRequest(email, password);
+        LoginRequest loginRequest = new LoginRequest(username, password);
         Gson gson = new Gson();
         String jsonRequest = gson.toJson(loginRequest);
 
@@ -128,10 +125,10 @@ public class LoginActivityPRO extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
                     Gson gson = new Gson();
-                    LoginResponse loginResponse = gson.fromJson(responseBody, LoginResponse.class);
-                    saveToken(loginResponse.getToken());
+                    JwtResponse jwtResponse = gson.fromJson(responseBody, JwtResponse.class);
+                    saveToken(jwtResponse.getToken());
                     if (autoLoginCheckBox.isChecked()) {
-                        saveLoginDetails(email, password);
+                        saveLoginDetails(username, password);
                     }
                     runOnUiThread(() -> {
                         Toast.makeText(LoginActivityPRO.this, "Login successful", Toast.LENGTH_SHORT).show();
@@ -153,11 +150,30 @@ public class LoginActivityPRO extends AppCompatActivity {
         editor.apply();
     }
 
-    private void saveLoginDetails(String email, String password) {
+    private void saveLoginDetails(String username, String password) {  // Использовать username
         SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("email", email);
+        editor.putString("username", username);  // Сохранить username
         editor.putString("password", password);
         editor.apply();
+    }
+
+    // Классы для JSON запросов и ответов
+    private static class LoginRequest {
+        private String username;
+        private String password;
+
+        public LoginRequest(String username, String password) {
+            this.username = username;
+            this.password = password;
+        }
+    }
+
+    private static class JwtResponse {
+        private String token;
+
+        public String getToken() {
+            return token;
+        }
     }
 }
