@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:padding="10dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+
+            <TextView
+                android:id="@+id/tradingPair"
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
+                android:text="COIN"
+                android:textSize="20sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/pnl"
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
+                android:text="PNL"
+                android:textSize="20sp"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="60dp"
+            android:gravity="center">
+
+
+            <TextView
+                android:id="@+id/positionValue"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:text="VALUE"
+                android:textSize="20sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/entryPrice"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:text="ENTRY"
+                android:textSize="20sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/riskLimitValue"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:text="RLV"
+                android:textSize="20sp"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="120dp"
+            android:gravity="center">
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/closePosition"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:text="Закрыть"
+                android:fontFamily="@font/days_one_regular"
+                android:background="@drawable/rounded_red"/>
+
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -56,5 +56,6 @@ dependencies {
     implementation libs.okhttp
     implementation libs.fk.blur.view.android
     implementation libs.mpandroidchart
+    implementation libs.bybit.java.api
 }
 

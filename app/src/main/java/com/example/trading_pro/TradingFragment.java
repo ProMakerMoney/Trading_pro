@@ -49,8 +49,8 @@ public class TradingFragment extends Fragment {
     private OkHttpClient client;
     private CoinAdapter coinAdapter;
     private List<Coin> coinList;
-    private String urlStatus = "http://91.226.173.246:8080/api/server/status";
-    private String urlCoins = "http://91.226.173.246:8080/api/coin/getAll";
+    //private String urlStatus = "http://91.226.173.246:8080/api/server/status";
+    private String urlCoins = "http://91.226.173.246:8888/api/coin/getAll";
 
     public TradingFragment() {
         // Required empty public constructor
@@ -86,75 +86,75 @@ public class TradingFragment extends Fragment {
         });
         recyclerView.setAdapter(coinAdapter);
 
-        startCheckingServerStatus();
+        //startCheckingServerStatus();
         fetchCoins(); // Получаем список монет
 
         return rootView;
     }
 
-    private void startCheckingServerStatus() {
-        checkServerStatus(); // Выполняем проверку статуса
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (isAdded() && getContext() != null) {
-                    startCheckingServerStatus(); // Повторяем проверку каждую секунду
-                }
-            }
-        }, 1000); // Задержка в 1 секунду
-    }
+//    private void startCheckingServerStatus() {
+//        checkServerStatus(); // Выполняем проверку статуса
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (isAdded() && getContext() != null) {
+//                    startCheckingServerStatus(); // Повторяем проверку каждую секунду
+//                }
+//            }
+//        }, 1000); // Задержка в 1 секунду
+//    }
 
-    private void checkServerStatus() {
-        Request request = new Request.Builder()
-                .url(urlStatus)
-                .addHeader("Authorization", "Bearer " + getToken()) // Добавление заголовка Authorization
-                .build();
-
-        //System.out.println("Выполняем запрос: " + request);
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                System.out.println("Запрос не удался: " + e.getMessage());
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (isAdded() && getContext() != null) {
-                            //System.out.println("ON FAILURE");
-                            statusServerOne.setText("Сервер недоступен!");
-                            layoutServerOne.setBackground(getResources().getDrawable(R.drawable.rounded_red));
-                        }
-                    }
-                });
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                //System.out.println("Запрос успешен: " + response);
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful() && responseBody != null) {
-                        final String responseText = responseBody.string();
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (isAdded() && getContext() != null) {
-                                    if (responseText.trim().equals("1")) {
-                                        System.out.println("УСЛОВИЕ ДОСТУПНОСТИ");
-                                        statusServerOne.setText("Работает");
-                                        layoutServerOne.setBackground(getResources().getDrawable(R.drawable.rounded_green));
-                                    } else {
-                                        System.out.println("УСЛОВИЕ НЕДОСТУПНОСТИ");
-                                        statusServerOne.setText("Недоступен");
-                                        layoutServerOne.setBackground(getResources().getDrawable(R.drawable.rounded_red));
-                                    }
-                                }
-                            }
-                        });
-                    }
-                }
-            }
-        });
-    }
+//    private void checkServerStatus() {
+//        Request request = new Request.Builder()
+//                .url(urlStatus)
+//                .addHeader("Authorization", "Bearer " + getToken()) // Добавление заголовка Authorization
+//                .build();
+//
+//        //System.out.println("Выполняем запрос: " + request);
+//
+//        client.newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+//                System.out.println("Запрос не удался: " + e.getMessage());
+//                handler.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        if (isAdded() && getContext() != null) {
+//                            //System.out.println("ON FAILURE");
+//                            statusServerOne.setText("Сервер недоступен!");
+//                            layoutServerOne.setBackground(getResources().getDrawable(R.drawable.rounded_red));
+//                        }
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+//                //System.out.println("Запрос успешен: " + response);
+//                try (ResponseBody responseBody = response.body()) {
+//                    if (response.isSuccessful() && responseBody != null) {
+//                        final String responseText = responseBody.string();
+//                        handler.post(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                if (isAdded() && getContext() != null) {
+//                                    if (responseText.trim().equals("1")) {
+//                                        System.out.println("УСЛОВИЕ ДОСТУПНОСТИ");
+//                                        statusServerOne.setText("Работает");
+//                                        layoutServerOne.setBackground(getResources().getDrawable(R.drawable.rounded_green));
+//                                    } else {
+//                                        System.out.println("УСЛОВИЕ НЕДОСТУПНОСТИ");
+//                                        statusServerOne.setText("Недоступен");
+//                                        layoutServerOne.setBackground(getResources().getDrawable(R.drawable.rounded_red));
+//                                    }
+//                                }
+//                            }
+//                        });
+//                    }
+//                }
+//            }
+//        });
+//    }
 
     private void fetchCoins() {
         Request request = new Request.Builder()

@@ -10,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.IOException;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -26,7 +28,7 @@ public class LoginActivityPRO extends AppCompatActivity {
     private Button loginButton;
     private TextView notRegisterTextView;
     private CheckBox autoLoginCheckBox;
-    private static final String LOGIN_URL = "http://91.226.173.246:8080/authenticate";
+    private static final String LOGIN_URL = "http://91.226.173.246:8888/authenticate";
     private final OkHttpClient client = new OkHttpClient();
 
     @Override
@@ -126,6 +128,8 @@ public class LoginActivityPRO extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Gson gson = new Gson();
                     JwtResponse jwtResponse = gson.fromJson(responseBody, JwtResponse.class);
+                    System.out.println("Ответ: " + jwtResponse);
+                    System.out.println("token: " + jwtResponse.getToken());
                     saveToken(jwtResponse.getToken());
                     if (autoLoginCheckBox.isChecked()) {
                         saveLoginDetails(username, password);
@@ -169,11 +173,23 @@ public class LoginActivityPRO extends AppCompatActivity {
         }
     }
 
-    private static class JwtResponse {
+    public class JwtResponse {
+        @SerializedName("jwt")
         private String token;
 
         public String getToken() {
             return token;
+        }
+
+        public void setToken(String token) {
+            this.token = token;
+        }
+
+        @Override
+        public String toString() {
+            return "JwtResponse{" +
+                    "token='" + token + '\'' +
+                    '}';
         }
     }
 }

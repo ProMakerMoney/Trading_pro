@@ -3,6 +3,7 @@ agp = "8.5.0"
 alibaba = "1.0.3"
 bottomNavigationBar = "2.0.5"
 bubblenavigation = "1.0.7"
+bybitApi = "2.4.0"
 bybitApiClient = "1.0.0"
 bybitJavaApi = "1.2.4"
 bybitJavaApiVersion = "1.0.6"
@@ -36,6 +37,7 @@ swiperefreshlayout = "1.1.0"
 alibaba = { module = "cn.gjing:alibaba", version.ref = "alibaba" }
 bottom-navigation-bar = { module = "com.ashokvarma.android:bottom-navigation-bar", version.ref = "bottomNavigationBar" }
 bubblenavigation = { module = "com.gauravk.bubblenavigation:bubblenavigation", version.ref = "bubblenavigation" }
+bybit-api = { module = "io.contek.invoker:bybit-api", version.ref = "bybitApi" }
 bybit-api-client = { module = "com.bybit:bybit-api-client", version.ref = "bybitApiClient" }
 bybit-java-api = { module = "io.github.wuhewuhe:bybit-java-api", version = "1.2.6" }
 bybit-java-api-v106 = { module = "io.github.wuhewuhe:bybit-java-api", version.ref = "bybitJavaApiVersion" }

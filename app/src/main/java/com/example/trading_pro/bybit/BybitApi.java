@@ -3,35 +3,56 @@ package com.example.trading_pro.bybit;
 
 
 
+import static java.sql.Types.TIMESTAMP;
+
+import androidx.annotation.NonNull;
+
+import com.bybit.api.client.config.BybitApiConfig;
+import com.bybit.api.client.domain.*;
+import com.bybit.api.client.domain.position.*;
+import com.bybit.api.client.domain.position.request.*;
+import com.bybit.api.client.service.BybitApiClientFactory;
+
+
+
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import okhttp3.*;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 
 public class BybitApi {
     private final String BASE_URL;
-    private final String API_KEY;
-    private final String API_SECRET;
-    private final OkHttpClient client;
+    final static String API_KEY = "bvQRWwQU8QapNl3Ppl";
+    final static String API_SECRET = "P5h8tnabkftRGzrdFV4DXbggI7XJnaaXx6KY";
     private final Gson gson;
+    final static String RECV_WINDOW = "5000";
 
-    public BybitApi(String apiKey, String apiSecret, boolean isTestnet) {
-        this.BASE_URL = isTestnet ? "https://api-testnet.bybit.com" : "https://api.bybit.com";
-        this.API_KEY = apiKey;
-        this.API_SECRET = apiSecret;
-        this.client = new OkHttpClient().newBuilder().build();
+    public BybitApi() {
+        this.BASE_URL = "https://api.bybit.com";
         this.gson = new Gson();
     }
 
+    /**
+     * Возвращает текущий таймстамп в миллисекундах.
+     *
+     * @return текущий таймстамп в миллисекундах
+     */
     private String getTimestamp() {
-        return Long.toString(ZonedDateTime.now().toInstant().toEpochMilli());
+        return Long.toString(Instant.now().toEpochMilli());
     }
 
     private String generateSignature(String timestamp, String queryString, String requestBody) throws NoSuchAlgorithmException, InvalidKeyException {
@@ -53,94 +74,48 @@ public class BybitApi {
         return hexString.toString();
     }
 
-    public void placeOrder(String symbol, String side, String orderType, String qty, String price) throws NoSuchAlgorithmException, InvalidKeyException, IOException {
-        String timestamp = getTimestamp();
-        String endpoint = "/v5/order/create";
-        String url = BASE_URL + endpoint;
 
-        Map<String, Object> params = new HashMap<>();
-        params.put("category", "linear");
-        params.put("symbol", symbol);
-        params.put("side", side);
-        params.put("orderType", orderType);
-        params.put("qty", qty);
-        params.put("price", price);
-        params.put("timeInForce", "GTC");
-
-        String jsonParams = gson.toJson(params);
-        String signature = generateSignature(timestamp, "", jsonParams);
-
-        RequestBody body = RequestBody.create(jsonParams, MediaType.get("application/json; charset=utf-8"));
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .addHeader("X-BAPI-API-KEY", API_KEY)
-                .addHeader("X-BAPI-SIGN", signature)
-                .addHeader("X-BAPI-SIGN-TYPE", "2")
-                .addHeader("X-BAPI-TIMESTAMP", timestamp)
-                .addHeader("X-BAPI-RECV-WINDOW", "5000")
-                .addHeader("Content-Type", "application/json")
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    System.out.println("Order placed successfully: " + response.body().string());
-                } else {
-                    System.err.println("Order placement failed: " + response.body().string());
-                }
-            }
-        });
+    public void getOpenPositions( ){
+        var client = BybitApiClientFactory.newInstance(API_KEY, API_SECRET, BybitApiConfig.MAINNET_DOMAIN).newAsyncPositionRestClient();
+        var positionListRequest = PositionDataRequest.builder().category(CategoryType.LINEAR).symbol(null).settleCoin("USDT").build();
+        client.getPositionInfo(positionListRequest, System.out::println);
     }
 
-    public void getOpenOrder(String symbol) throws NoSuchAlgorithmException, InvalidKeyException, IOException {
-        String timestamp = getTimestamp();
-        String endpoint = "/v5/order/realtime";
-        String url = BASE_URL + endpoint;
 
-        Map<String, Object> params = new HashMap<>();
-        params.put("category", "linear");
-        params.put("symbol", symbol);
-        params.put("settleCoin", "USDT");
-
-        StringBuilder queryString = new StringBuilder();
-        for (Map.Entry<String, Object> entry : params.entrySet()) {
-            queryString.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
+    /**
+     * To generate query string for GET requests
+     * @param map
+     * @return
+     */
+    private static StringBuilder genQueryStr(Map<String, Object> map) {
+        Set<String> keySet = map.keySet();
+        Iterator<String> iter = keySet.iterator();
+        StringBuilder sb = new StringBuilder();
+        while (iter.hasNext()) {
+            String key = iter.next();
+            sb.append(key)
+                    .append("=")
+                    .append(map.get(key))
+                    .append("&");
         }
-        queryString.deleteCharAt(queryString.length() - 1);
+        sb.deleteCharAt(sb.length() - 1);
+        return sb;
+    }
 
-        String signature = generateSignature(timestamp, queryString.toString(), "");
+    /**
+     * The way to generate the sign for GET requests
+     * @param params: Map input parameters
+     * @return signature used to be a parameter in the header
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeyException
+     */
+    private static String genGetSign(Map<String, Object> params) throws NoSuchAlgorithmException, InvalidKeyException {
+        StringBuilder sb = genQueryStr(params);
+        String queryStr = TIMESTAMP + API_KEY + RECV_WINDOW + sb;
 
-        Request request = new Request.Builder()
-                .url(url + "?" + queryString.toString())
-                .get()
-                .addHeader("X-BAPI-API-KEY", API_KEY)
-                .addHeader("X-BAPI-SIGN", signature)
-                .addHeader("X-BAPI-SIGN-TYPE", "2")
-                .addHeader("X-BAPI-TIMESTAMP", timestamp)
-                .addHeader("X-BAPI-RECV-WINDOW", "5000")
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    System.out.println("Open orders: " + response.body().string());
-                } else {
-                    System.err.println("Failed to get open orders: " + response.body().string());
-                }
-            }
-        });
+        Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secret_key = new SecretKeySpec(API_SECRET.getBytes(), "HmacSHA256");
+        sha256_HMAC.init(secret_key);
+        return bytesToHex(sha256_HMAC.doFinal(queryStr.getBytes()));
     }
 }
