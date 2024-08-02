@@ -31,6 +31,18 @@
             android:textColor="#FFFF"
             android:textSize="20sp" />
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/calculatorB"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/days_one_regular"
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center"
+            android:text="Калькулятор"
+            android:textColor="#FFFF"
+            android:textSize="20sp"
+            android:background="@drawable/rounded_red"/>
+
     </LinearLayout>
 
 

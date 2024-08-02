@@ -58,6 +58,13 @@
 
         </activity>
 
+        <activity
+            android:name=".CalcActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme">
+
+        </activity>
+
         <activity android:name=".CoinDetailActivity" />
 
     </application>

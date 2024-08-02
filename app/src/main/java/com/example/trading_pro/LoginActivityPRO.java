@@ -1,5 +1,6 @@
 package com.example.trading_pro;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ public class LoginActivityPRO extends AppCompatActivity {
     private static final String LOGIN_URL = "http://91.226.173.246:8888/authenticate";
     private final OkHttpClient client = new OkHttpClient();
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +54,7 @@ public class LoginActivityPRO extends AppCompatActivity {
         }
 
         loginButton.setOnClickListener(v -> loginUser());
+
 
         notRegisterTextView.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivityPRO.this, RegisterActivity.class);
