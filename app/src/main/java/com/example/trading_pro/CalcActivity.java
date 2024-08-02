@@ -99,12 +99,12 @@ public class CalcActivity extends Activity {
                     }
 
                     // Установка текста в TextView
-                    volumeTextView.setText(String.format("Объем: %.2f", volume));
-                    marginTextView.setText(String.format("Маржа: %.2f", margin));
-                    provisionTextView.setText(String.format("Обеспечение: %.2f", provision));
-                    tp1TextView.setText(String.format("TP_1: %.2f", TP_1));
-                    tp2TextView.setText(String.format("TP_2: %.2f", TP_2));
-                    tp3TextView.setText(String.format("TP_3: %.2f", TP_3));
+                    volumeTextView.setText(String.format("Объем: %.4f", volume));
+                    marginTextView.setText(String.format("Маржа: %.4f", margin));
+                    provisionTextView.setText(String.format("Обеспечение: %.4f", provision));
+                    tp1TextView.setText(String.format("TP_1: %.4f", TP_1));
+                    tp2TextView.setText(String.format("TP_2: %.4f", TP_2));
+                    tp3TextView.setText(String.format("TP_3: %.4f", TP_3));
 
                     Toast.makeText(CalcActivity.this, "Расчеты выполнены успешно", Toast.LENGTH_SHORT).show();
                 } catch (NumberFormatException e) {
