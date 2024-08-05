@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -12,14 +11,19 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="250dp"
+            android:layout_width="200dp"
             android:layout_height="70dp"
-            android:layout_marginTop="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:gravity="center_horizontal">
+            android:layout_gravity="center">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -29,168 +33,341 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-        <androidx.appcompat.widget.AppCompatToggleButton
-            android:id="@+id/my_toggle_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textOff="Short"
-            android:textOn="Long"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="10dp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:background="@drawable/rounded_gray">
-
-
-            <TextView
-                android:layout_width="50dp"
-                android:layout_height="40dp"
-                android:layout_margin="7dp"
-                android:ems="10"
-                android:text="Плечо"
-                android:gravity="center"/>
-
-            <TextView
-                android:layout_width="90dp"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:layout_margin="7dp"
-                android:ems="10"
-                android:text="Вход" />
-
-            <TextView
-                android:layout_width="90dp"
-                android:layout_height="40dp"
-                android:layout_margin="7dp"
-                android:gravity="center"
-                android:ems="10"
-                android:text="Стоп" />
-
-            <TextView
-                android:layout_width="70dp"
-                android:layout_height="40dp"
-                android:layout_margin="7dp"
-                android:ems="10"
-                android:text="Потеря"
-                android:gravity="center" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-
-            <EditText
-                android:id="@+id/leverageCalc"
-                android:layout_width="50dp"
-                android:layout_height="40dp"
-                android:layout_margin="7dp"
-                android:ems="10"
-                android:hint="Плечо"
-                android:textSize="15dp"
-                android:gravity="center"
-                android:inputType="numberDecimal"
-                android:background="@drawable/edit_text_background"/>
-
-            <EditText
-                android:id="@+id/enterPrice"
-                android:layout_width="90dp"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:layout_margin="7dp"
-                android:textSize="15dp"
-                android:ems="10"
-                android:hint="Вход"
-                android:inputType="numberDecimal"
-                android:background="@drawable/edit_text_background"/>
-
-            <EditText
-                android:id="@+id/stopLoss"
-                android:layout_width="90dp"
-                android:layout_height="40dp"
-                android:layout_margin="7dp"
-                android:textSize="15dp"
-                android:gravity="center"
-                android:ems="10"
-                android:hint="Стоп"
-                android:inputType="numberDecimal"
-                android:background="@drawable/edit_text_background"/>
-
-            <EditText
-                android:id="@+id/dol"
-                android:layout_width="70dp"
-                android:layout_height="40dp"
-                android:layout_margin="7dp"
-                android:ems="10"
-                android:textSize="15dp"
-                android:hint="Потеря"
-                android:inputType="numberDecimal"
-                android:gravity="center"
-                android:background="@drawable/edit_text_background"/>
-        </LinearLayout>
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/calc"
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
             android:background="@drawable/rounded_green"
+            android:layout_gravity="center_vertical"
             android:text="Расчитать"/>
+
+
+    </LinearLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="10dp"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="15dp"
+            android:padding="16dp"
+            android:background="@drawable/input">
 
-            <TextView
-                android:id="@+id/volume"
+            <!-- Top Toggle Buttons -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Объем: "
-                android:textSize="20dp"/>
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/radio_isolated"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:text="Изолир."
+                    android:gravity="center"
+                    android:layout_marginHorizontal="17dp"
+                    android:background="@drawable/rounded_gray"/>
+
+                <TextView
+                    android:id="@+id/radio_cross"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:text="25X"
+                    android:layout_marginHorizontal="17dp"
+                    android:gravity="center"
+                    android:background="@drawable/rounded_gray"/>
+
+                <androidx.appcompat.widget.AppCompatToggleButton
+                    android:id="@+id/my_toggle_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginHorizontal="17dp"
+                    android:textOff="Short"
+                    android:textOn="Long"
+                    android:background="@drawable/rounded_gray"/>
+
+            </LinearLayout>
+
+
+            <!-- Amount Input -->
+            <EditText
+                android:id="@+id/less"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Допустимая потеря"
+                android:layout_marginTop="16dp"
+                android:paddingStart="15dp"
+                android:background="@drawable/rounded_gray"/>
+
+            <!-- SeekBar for adjusting amount -->
+            <androidx.appcompat.widget.AppCompatSeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp" />
+
+            <EditText
+                android:id="@+id/openPrice"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Цена открытия сделки"
+                android:layout_marginTop="16dp"
+                android:paddingStart="15dp"
+                android:background="@drawable/rounded_gray"/>
 
             <TextView
-                android:id="@+id/margin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Маржа: "
-                android:textSize="20dp"/>
+                android:id="@+id/amount_input"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Кол-во (USDT)"
+                android:gravity="center_vertical"
+                android:textSize="18dp"
+                android:layout_marginTop="16dp"
+                android:paddingStart="15dp"
+                android:background="@drawable/rounded_gray"/>
 
-            <TextView
-                android:id="@+id/provision"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Обеспечение: "
-                android:textSize="20dp"/>
 
-            <TextView
-                android:id="@+id/tp1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TP_1: "
-                android:textSize="20dp"/>
 
-            <TextView
-                android:id="@+id/tp2"
-                android:layout_width="wrap_content"
+            <!-- Long and Short Information -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TP_2: "
-                android:textSize="20dp"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:weightSum="2">
 
-            <TextView
-                android:id="@+id/tp3"
-                android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/buy_long"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Куплю 0 USDT" />
+
+                    <TextView
+                        android:id="@+id/buy_long_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1 151,0865 USDT" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/sell_short"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Продам 0 USDT" />
+
+                    <TextView
+                        android:id="@+id/sell_short_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1 151,0865 USDT" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Checkboxes -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TP_3: "
-                android:textSize="20dp"/>
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="180dp"
+                        android:layout_height="70dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:gravity="center_horizontal">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:hint="Тейк-профит №1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="150dp"
+                        android:layout_height="70dp"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:gravity="center_horizontal">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:hint="POE" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="180dp"
+                        android:layout_height="70dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:gravity="center_horizontal">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:hint="Тейк-профит №2" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="150dp"
+                        android:layout_height="70dp"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:gravity="center_horizontal">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:hint="POE" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="180dp"
+                        android:layout_height="70dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:gravity="center_horizontal">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:hint="Тейк-профит №3" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="150dp"
+                        android:layout_height="70dp"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:gravity="center_horizontal">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:hint="POE" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="180dp"
+                        android:layout_height="70dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:gravity="center_horizontal">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:hint="Стоп-лосс" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="150dp"
+                        android:layout_height="70dp"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:gravity="center_horizontal">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:hint="POE" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!-- Action Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp">
+
+                <Button
+                    android:id="@+id/button_open_long"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Открыть Лонг"
+                    android:layout_weight="1"
+                    android:background="#4CAF50"
+                    android:textColor="#FFFFFF" />
+
+                <Button
+                    android:id="@+id/button_open_short"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Открыть Шорт"
+                    android:layout_weight="1"
+                    android:background="#F44336"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginStart="8dp" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
