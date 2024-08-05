@@ -2,14 +2,25 @@ package com.example.trading_pro;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatToggleButton;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class CalcActivity extends Activity {
 
@@ -18,7 +29,14 @@ public class CalcActivity extends Activity {
 //    private EditText stopLoss;
 //    private EditText dol;
     private AppCompatButton calcButton;
-    private AppCompatToggleButton myToggleButton;
+
+
+    private AutoCompleteTextView autoCompleteTextView;
+    private TextView leverageTextView;
+
+    private AppCompatToggleButton toggleButton;
+    private Button buttonOpenLong;
+    private Button buttonOpenShort;
 
 //    private TextView volumeTextView;
 //    private TextView marginTextView;
@@ -32,13 +50,36 @@ public class CalcActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calc_layout);
 
+        leverageTextView = findViewById(R.id.leverage);
+
+        leverageTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLeverageDialog();
+            }
+        });
+
+
+        autoCompleteTextView = findViewById(R.id.autoCompleteTextView);
+        // Predefined list of coins
+        List<String> coins = Arrays.asList("BTC", "ETH", "LTC", "LINK", "ADA", "AAVE");
+
+        // Set up ArrayAdapter for AutoCompleteTextView
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_dropdown_item_1line, coins);
+        autoCompleteTextView.setAdapter(adapter);
+
+        // Optional: Set threshold for showing suggestions
+        autoCompleteTextView.setThreshold(1); // Start showing suggestions after one character input
         // Инициализация полей
 //        leverageCalc = findViewById(R.id.leverageCalc);
 //        enterPrice = findViewById(R.id.enterPrice);
 //        stopLoss = findViewById(R.id.stopLoss);
 //        dol = findViewById(R.id.dol);
         calcButton = findViewById(R.id.calc);
-        myToggleButton = findViewById(R.id.my_toggle_button);
+        toggleButton = findViewById(R.id.my_toggle_button);
+        buttonOpenLong = findViewById(R.id.button_open_long);
+        buttonOpenShort = findViewById(R.id.button_open_short);
 
         // Инициализация TextView для отображения результатов
 //        volumeTextView = findViewById(R.id.volume);
@@ -47,6 +88,30 @@ public class CalcActivity extends Activity {
 //        tp1TextView = findViewById(R.id.tp1);
 //        tp2TextView = findViewById(R.id.tp2);
 //        tp3TextView = findViewById(R.id.tp3);
+
+        toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // Toggle is enabled (Long position)
+                    buttonOpenLong.setBackgroundColor(Color.parseColor("#4CAF50")); // Original green color
+                    buttonOpenShort.setBackgroundColor(Color.GRAY); // Gray color
+                } else {
+                    // Toggle is disabled (Short position)
+                    buttonOpenLong.setBackgroundColor(Color.GRAY); // Gray color
+                    buttonOpenShort.setBackgroundColor(Color.parseColor("#F44336")); // Original red color
+                }
+            }
+        });
+
+        // Initialize the state based on the toggle button
+        if (toggleButton.isChecked()) {
+            buttonOpenLong.setBackgroundColor(Color.parseColor("#4CAF50"));
+            buttonOpenShort.setBackgroundColor(Color.GRAY);
+        } else {
+            buttonOpenLong.setBackgroundColor(Color.GRAY);
+            buttonOpenShort.setBackgroundColor(Color.parseColor("#F44336"));
+        }
 
         // Установка слушателя для кнопки
         calcButton.setOnClickListener(new View.OnClickListener() {
@@ -112,5 +177,52 @@ public class CalcActivity extends Activity {
                 }
             }
         });
+    }
+
+    private void showLeverageDialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_leverage);
+
+        final EditText editTextLeverage = dialog.findViewById(R.id.editTextLeverage);
+        final SeekBar seekBarLeverage = dialog.findViewById(R.id.seekBarLeverage);
+        Button buttonOk = dialog.findViewById(R.id.buttonOk);
+
+        // Initialize the seekbar and edittext with the current value
+        int currentLeverage = Integer.parseInt(leverageTextView.getText().toString().replace("X", ""));
+        seekBarLeverage.setProgress(currentLeverage);
+        editTextLeverage.setText(String.valueOf(currentLeverage));
+
+        seekBarLeverage.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                editTextLeverage.setText(String.valueOf(progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int leverage = Integer.parseInt(editTextLeverage.getText().toString());
+                leverageTextView.setText(leverage + "X");
+                dialog.dismiss();
+            }
+        });
+
+        // Set dialog size
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(layoutParams);
+
+        dialog.show();
     }
 }
