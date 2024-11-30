@@ -1,0 +1,37 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <!-- Имя отправителя -->
+    <TextView
+        android:id="@+id/message_sender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Друг"
+        android:textColor="#555555"
+        android:textSize="12sp" />
+
+    <!-- Текст сообщения -->
+    <TextView
+        android:id="@+id/message_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_message_background"
+        android:padding="8dp"
+        android:text="Привет! Как дела?"
+        android:textColor="#FFFFFF" />
+
+    <!-- Время отправки -->
+    <TextView
+        android:id="@+id/message_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="10:45"
+        android:textColor="#888888"
+        android:textSize="10sp"
+        android:layout_marginTop="4dp" />
+</LinearLayout>
